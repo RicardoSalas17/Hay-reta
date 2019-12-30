@@ -1,22 +1,17 @@
 const { Schema, model } = require('mongoose')
 const PLM = require('passport-local-mongoose')
 
-const userSchema = new Schema(
+const teamSchema = new Schema(
   {
     name: String,
-    email: String,
     image: String,
     matchs: [{
       type: Schema.Types.ObjectId,
       ref: "Match",
     }],
-    teams:[{
+    players:[{
       type: Schema.Types.ObjectId,
-      ref: "Teams",
-    }],
-    matchs:[{
-      type: Schema.Types.ObjectId,
-      ref: "Teams",
+      ref: "User",
     }]
   },
   
@@ -26,7 +21,5 @@ const userSchema = new Schema(
   }
 )
 
-userSchema.plugin(PLM, { usernameField: 'email' })
 
-module.exports = model('User', userSchema)
-
+module.exports = model('Team', teamSchema)

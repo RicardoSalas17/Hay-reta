@@ -2,12 +2,16 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const passport = require('../config/passport');
+const upload = require('../config/cloudinary')
+const {
+  createUser,
+  editUser,
+  getUser
+} = require("../controllers/auth.controller");
 
-router.post('/signup', (req, res, next) => {
-  User.register(req.body, req.body.password)
-    .then((user) => res.status(201).json({ user }))
-    .catch((err) => res.status(500).json({ err }));
-});
+router.post('/signup',upload.single("image"),createUser);
+
+router.patch('/editprofile/:id',upload.single("image"),editUser);
 
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
   const { user } = req;
@@ -19,14 +23,15 @@ router.get('/logout', (req, res, next) => {
   res.status(200).json({ msg: 'Logged out' });
 });
 
-router.get('/profile', isAuth, (req, res, next) => {
-  User.findById(req.user._id)
-    .then((user) => res.status(200).json({ user }))
-    .catch((err) => res.status(500).json({ err }));
-});
+
+router.get('/profile', getUser)
+
+
 
 function isAuth(req, res, next) {
   req.isAuthenticated() ? next() : res.status(401).json({ msg: 'Log in first' });
 }
+
+
 
 module.exports = router;
