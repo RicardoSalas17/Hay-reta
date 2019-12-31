@@ -47,8 +47,15 @@ app.use(logger('dev'));
 
 const index = require('./routes/index');
 const auth = require('./routes/auth');
+const matchs = require('./routes/match');
+const comment = require('./routes/comment');
+const team = require('./routes/team');
+
 app.use('/', index);
 app.use('/', auth);
+app.use('/', matchs);
+app.use('/', comment);
+app.use('/', team);
 
 // Uncomment this line for production
 // app.get('/*', (req, res) => res.sendFile(__dirname + '/public/index.html'));

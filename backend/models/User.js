@@ -5,7 +5,10 @@ const userSchema = new Schema(
   {
     name: String,
     email: String,
-    image: String,
+    image: {
+      type: String,
+      default: 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'
+     },
     matchs: [{
       type: Schema.Types.ObjectId,
       ref: "Match",

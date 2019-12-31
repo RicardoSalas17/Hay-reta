@@ -1,0 +1,47 @@
+.mu-div-home {
+
+  background: url("../img/home1.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  filter: grayscale(50%);
+}
+
+.mu-div-home div {
+  padding: 25% 0;
+  vertical-align: middle;
+}
+.mu-div-home h1 {
+  color: rgb(38, 199, 65);
+  font-weight: bolder;
+  font-size: 4vw;
+  -webkit-text-stroke: 0.5px red;
+  text-shadow: 2px 2px 5px red;
+}
+
+.mu-div-home button {
+  border-radius: 45px;
+  padding-left: 5%;
+  padding-right: 5%;
+  background: rgb(3, 214, 39);
+  color: red;
+}
+
+.mu-div-home button:hover {
+  background: rgb(38, 199, 65);
+  color: blue;
+}
+
+.mu-div-row1 img {
+  width: 100%;
+  height: 100%;
+}
+
+.mu-div-row2 {
+  background: black;
+}
+
+.mu-div-row2 img {
+  border-radius: 50%;
+  width: 60%;
+  height: 60%;
+}
