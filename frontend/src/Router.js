@@ -7,8 +7,6 @@ import SignupContainer from './components/Signup/SignupContainer'
 import LoginContainer from './components/Login/LoginContainer'
 import upContainer from './components/Events/EventsContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
-import EventTicketContainer from './components/Events/EventTicketMaster';
-import EventDetailContainer from './components/Events/EventDetailContainer';
 import AddEvent from './components/Events/AddEvent';
 import EventDetail from './components/Events/EventDetail';
 import Editevent from './components/Events/Editevent';
@@ -32,8 +30,6 @@ const Router = () => (
       <Route exact path="/editevents/:id" component={Editevent} />
       <Route exact path="/profile" component={ProfileContainer} />
       <Route exact path="/editprofile/:id" component={EditUser} />
-      <Route exact path="/events-tm" component={EventTicketContainer} />
-      <Route exact path="/events-tm/:id" component={EventDetailContainer} />
       <Route component={NotFound} />
     </Switch>
   </BrowserRouter>

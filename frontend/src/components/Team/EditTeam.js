@@ -5,7 +5,7 @@ import MY_SERVICE from '../../services/index';
 import Swal from 'sweetalert2'
 
 
-export default class Editevent extends Component {
+export default class EditTeam extends Component {
   state = {
 
       formEvent: {

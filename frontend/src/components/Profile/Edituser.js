@@ -42,9 +42,9 @@ export default class EditUser extends Component {
     formData.append('image', this.state.file)
     
 
-    const event = await MY_SERVICE.updateUser(`${this.props.location.pathname}`,formData)
+    const user = await MY_SERVICE.updateUser(`${this.props.location.pathname}`,formData)
 
-    Swal.fire( 'User updated', 'success')
+    Swal.fire( `${user.name}`, 'success')
     this.setState({ 
       formUser: {
         name: '',

@@ -23,46 +23,30 @@ exports.getTeam = async (req, res) => {
 };
 
 exports.createTeam = async (req, res) => {
-  const { matchName,
-    dateTime,
-    localTime,
-    description,
-    lng,
-    lat,
-    direction,
-    matchType
-    
+  const { name,
+    players
           } = req.body
-
   const { user } = req;
   let createMatch;
+
+ const plays = (players.split(','))
+
 
 
   if (req.file) {
     createMatch =  {
-      matchName,
-      dateTime,
-      localTime,
-      description,
-      lng,
-      lat,
-      direction,
-      matchType,
+      name,
+    players:plays,
     owner: user._id,
     image: req.file.secure_url
-      
-    }
+    
+  }
+
     
   }else {
     createMatch ={
-      matchName,
-      dateTime,
-      localTime,
-      description,
-      lng,
-      lat,
-      direction,
-      matchType,
+      name,
+    players:plays,
     owner: user._id
     } 
     
@@ -70,27 +54,23 @@ exports.createTeam = async (req, res) => {
     const matchCreated = await Team.create(createMatch);
   const userUpdated = await User.findByIdAndUpdate(
     user._id,
-    { $push: { matchs:matchCreated._id } },
+    { $push: { teams:matchCreated._id } },
     { new: true }
   );
 
   req.user = userUpdated;
 
   res.status(201).json(matchCreated);
+  console.log(matchCreated)
+
 };
 
 
 
 
 exports.updateTeam = async (req, res) => {
-  const { matchName,
-    dateTime,
-    localTime,
-    description,
-    lng,
-    lat,
-    direction,
-    matchType,
+  const {name,
+    players,
     
           } = req.body
           const { id } = req.params
@@ -99,14 +79,8 @@ exports.updateTeam = async (req, res) => {
   if (req.file) {
      matchUpdate = await Team.findByIdAndUpdate(id,{
       $set:
-    { matchName,
-      dateTime,
-      localTime,
-      description,
-      lng,
-      lat,
-      direction,
-      matchType,
+    { name,
+      players,
     image: req.file.secure_url}
       
     })}
@@ -114,15 +88,8 @@ exports.updateTeam = async (req, res) => {
      matchUpdate = await Team.findByIdAndUpdate(id,{
     $set:
    {
-    matchName,
-    dateTime,
-    localTime,
-    description,
-    lng,
-    lat,
-    direction,
-    matchType,
-    score,
+    name,
+    players
 
     } 
   })

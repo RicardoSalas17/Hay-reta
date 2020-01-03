@@ -18,33 +18,35 @@ class MyProvider extends Component {
       email: '',
       password: ''
     },
-    formEvent:{
-    eventName: '',
-    dateTime: '',
-    localTime: '',
-    description: '',
-    image:'',
-    },
-    formComment:{
-      content: '',
+    teamForm: {
+      name:'',
       image:'',
+      players:[]
       },
     user: {},
-    events:'Loading...',
-    file:{}
-
+    file:{},
+    users:{}
   }
 
   componentDidMount() {
-    if (!document.cookie) {
-      MY_SERVICE.getUser()
-        .then(({ data }) => {
-          this.setState({ loggedUser: true, user: data.user })
-          Swal.fire(`Welcome back ${data.user.name} `, '', 'success')
-        })
-        .catch(err => console.log(err))
+    // if (!document.cookie) {
+    //   MY_SERVICE.getUser()
+    //     .then(({ data }) => {
+    //       this.setState({ loggedUser: true, user: data.user })
+    //       Swal.fire(`Welcome back ${data.user.name} `, '', 'success')
+    //     })
+    //     .catch(err => console.log(err))
+    // }
+
+    if(this.state.loggedUser){
+
+      MY_SERVICE.getUsers()
+      .then(({ data }) => {
+        this.setState({users: data })
+      })
+      .catch(err => console.log(err))
+    
     }
-    this.handleEvents()
   }
 
   componentDidUpdate() {
@@ -53,6 +55,15 @@ class MyProvider extends Component {
       this.setState({ loggedUser: true, user: data.user })
     })
     .catch(err => console.log(err))
+// if(this.state.loggedUser){
+
+//   MY_SERVICE.getUsers()
+//   .then(({ data }) => {
+//     this.setState({users: data })
+//   })
+//   .catch(err => console.log(err))
+
+// }
 
   }
 
@@ -65,6 +76,14 @@ class MyProvider extends Component {
     this.setState({ obj: a })
   }
 
+
+handleChange= (e,a, c) =>{
+  const s = this.state[a]
+  const key = c
+  s[key] = e
+  this.setState({ obj: {s}})
+
+}
 
   handleFile = e => {
     this.setState({ file: e.target.files[0] })
@@ -80,10 +99,8 @@ class MyProvider extends Component {
       formData.append(key, this.state.formSignup[key])
     }
     formData.append('image', this.state.file)
-
     const user = await MY_SERVICE.signup(formData)
-
-    
+    console.log(user)
     Swal.fire(`Bienvenido ${user.data.name}`, 'Gracias por registrate', 'success')
     this.setState({ loggedUser: true, user: user.data })
     this.setState({ 
@@ -118,14 +135,31 @@ class MyProvider extends Component {
     cb()
   }
 
-  handleEvents =  () => {
-    MY_SERVICE.getEvents().then(({ data }) => { 
-      this.setState({  events:data.events })
 
+
+  
+  createTeam = async e=> {
+    e.preventDefault()
+    const { teamForm } = this.state;
+    const formDatas = new FormData()
+
+    for(let key in teamForm){
+      formDatas.append(key, this.state.teamForm[key])
+    }
+    formDatas.append('image', this.state.file)
+
+    const team = await MY_SERVICE.addTeam(formDatas)
+    console.log(team)
+
+    Swal.fire(`Team ${team.data.name} `, 'Team created', 'success')
+    this.setState({ 
+      teamForm: {
+            name: '',
+             image:'',
+             players:[]
+      }
     })
-    .catch(err => console.log(err))
-  }
-
+  };
 
   render() {
 
@@ -134,19 +168,20 @@ class MyProvider extends Component {
         value={{
           loggedUser: this.state.loggedUser,
           formSignup: this.state.formSignup,
-          formEvent: this.state.formEvent,
+          teamForm: this.state.teamForm,
           loginForm: this.state.loginForm,
           user: this.state.user,
-          events: this.state.events,
           handleInput: this.handleInput,
           handleSignup: this.handleSignup,
           handleLogin: this.handleLogin,
           handleLogout: this.handleLogout,
           handlecreateEvent: this.handlecreateEvent,
           handleFile:this.handleFile,
-          handleEvents:this.handleEvents,
           handleUser:this.handleUser,
           handleupdateEvent:this.handleupdateEvent,
+          createTeam:this.createTeam,
+          users:this.state.users,
+          handleChange:this.handleChange
         }}
       >
         {this.props.children}
@@ -159,3 +194,13 @@ class MyProvider extends Component {
 
 
 export default MyProvider
+
+
+  // handleEvents =  () => {
+  //   MY_SERVICE.getEvents().then(({ data }) => { 
+  //     this.setState({  events:data.events })
+
+  //   })
+  //   .catch(err => console.log(err))
+  // }
+

@@ -4,7 +4,10 @@ const PLM = require('passport-local-mongoose')
 const teamSchema = new Schema(
   {
     name: String,
-    image: String,
+    image: {
+      type: String,
+      // default: 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'
+     },
     matchs: [{
       type: Schema.Types.ObjectId,
       ref: "Match",
@@ -12,8 +15,13 @@ const teamSchema = new Schema(
     players:[{
       type: Schema.Types.ObjectId,
       ref: "User",
-    }]
+    }],
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: "User"
+    },
   },
+  
   
   {
     timestamps: true,

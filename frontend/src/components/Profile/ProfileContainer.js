@@ -4,11 +4,21 @@ import { Link } from 'react-router-dom'
 
 export default function ProfileContainer() {
 
+  // const { users } = this.context
+  // if (!users) {
+  //   return (
+  //     <div className="App">
+  //     loading
+  //     </div>
+  //   )
+  // }   
+  
 
   return (
     <MyContext.Consumer>
     
-      {context => (
+      {context =>
+        (
         
         
       <div>
@@ -39,9 +49,46 @@ export default function ProfileContainer() {
             <h2 className="titulo-mis-eventos">MY TEAMS</h2>
           </div>
 
+          {context.user.teams.map(({ 
+            name, 
+           image,
+           _id,
+           
+          //  players
+          } ) => (
 
-
-
+          <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
+            <div className="col-12 col-md-4">
+              <img
+                src={`${image}`}
+                alt={`${name}`}
+                className="evento-privado-img py-auto"
+              />
+            </div>
+            <div className="col-12 col-md-6 text-white">
+              <h2 className="text-center">
+                {" "}
+                <b>{name} </b>{" "}
+              </h2>
+              <div className="py-3">
+                <p>
+                  <b>Fecha:</b>{""}
+                </p>
+                <p>
+                  <b>Horario:</b>{""}
+                </p>
+                <p>
+                  <b>Descripción:</b>{""}
+                </p>
+              </div>
+​
+              <div className="text-center mt-2">
+               
+                <Link className="event-button" exact to={`/events/${_id}`} type="button" >Detail</Link>
+              </div>
+            </div>
+            </div>
+            ))}
         </div>
       </div>
     </div>

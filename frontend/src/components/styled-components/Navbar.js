@@ -24,7 +24,6 @@ background: rgba(0, 0, 0, 0.863) !important;
   }
   & span {
     color: red;
-
     padding: 5px 5px 5px 10px;
   }
 
@@ -69,7 +68,8 @@ function Navbar(props) {
             {context.loggedUser && (
             
               <NavLink
-              exact to="/addteam" activeClassName="navbar-active"
+              exact to={`/addteam`}
+              activeClassName="navbar-active"
               >
               Add Team
               </NavLink>
@@ -82,7 +82,7 @@ function Navbar(props) {
                 <NavLink
                 exact to="/events" activeClassName="navbar-active"
                 >
-                 Matchs
+                 Matches
                 </NavLink>
            
             )}

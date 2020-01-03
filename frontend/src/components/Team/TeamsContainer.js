@@ -1,10 +1,10 @@
 import React from 'react'
 import { MyContext } from '../../context'
 // import EventCard from "./EventCards";
-import EventsCard from './EventCards';
+import TeamsCard from './TeamsCards';
 // import { Redirect } from 'react-router';
 
-export default class upContainer extends React.Component {
+export default class Teams extends React.Component {
 
 
   render() {
@@ -19,10 +19,9 @@ export default class upContainer extends React.Component {
         
           <div className="backgroundEvents">
           <div className="container">
-        
-
-          <EventsCard/>
-          </div>          </div>
+          <TeamsCard/>
+          </div>    
+          </div>
        
       )}
     </MyContext.Consumer>

@@ -1,8 +1,15 @@
 import React from "react";
-import { Form, Input, Icon, Button } from "antd";
+import { Form, Input, Icon, Button, Skeleton } from "antd";
 import { MyContext } from "../../context";
 
-export default function SignupContainer(props) {
+export default class SignupContainer extends React.Component {
+  componentWillMount() {
+    console.log(this.context)
+    if (this.context.loggedUser) {
+      return this.props.history.push("/profile");
+    }
+  }
+  render() {
   return (
     <MyContext.Consumer>
       {context => (
@@ -12,7 +19,16 @@ export default function SignupContainer(props) {
               className=" p-2 p-md-5 "
               onSubmit={e => {
                 context.handleSignup(e);
-                props.history.push("/profile");
+                const { user } = context
+                if (user) {
+                  this.props.history.push("/profile");
+                } else{
+                  return (
+                    <div className="App">
+                    <Skeleton avatar paragraph={{ rows: 4 }} />
+                    </div>
+                  )
+                }
               }}
             >
               <Form.Item>
@@ -71,5 +87,5 @@ export default function SignupContainer(props) {
         </div>
       )}
     </MyContext.Consumer>
-  );
+  );}
 }

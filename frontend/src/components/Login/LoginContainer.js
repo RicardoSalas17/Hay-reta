@@ -3,8 +3,7 @@ import { Form, Input, Icon, Button } from "antd";
 import { MyContext } from "../../context";
 
 export default class LoginContainer extends React.Component {
-  componentDidMount() {
-
+  componentDidUpdate() {
     if (this.context.loggedUser) {
       return this.props.history.push("/profile");
     }

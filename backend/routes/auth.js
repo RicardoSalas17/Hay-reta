@@ -6,8 +6,12 @@ const upload = require('../config/cloudinary')
 const {
   createUser,
   editUser,
-  getUser
+  getUser,
+  getUsers,
+
 } = require("../controllers/auth.controller");
+
+router.get('/users', getUsers)
 
 router.post('/signup',upload.single("image"),createUser);
 

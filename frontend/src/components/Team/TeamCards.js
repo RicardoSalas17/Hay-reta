@@ -8,19 +8,19 @@ import {
 } from 'reactstrap';
 
 
-class EventsCard extends Component {
+class TeamsCard extends Component {
   state = {
     events: []
   }
 
-  async componentDidMount()  {
-    const { data } = await MY_SERVICE.getEvents()
-    this.setState({ events: [...data.events] })
+  // async componentDidMount()  {
+  //   const { data } = await MY_SERVICE.getEvents()
+  //   this.setState({ events: [...data.events] })
     
-  }
-  async componentDidUpdate()  {
-    const { data } = await MY_SERVICE.getEvents()
-    this.setState({ events: [...data.events] })
+  // }
+  // async componentDidUpdate()  {
+  //   const { data } = await MY_SERVICE.getEvents()
+  //   this.setState({ events: [...data.events] })
     
   }
 
@@ -79,7 +79,7 @@ class EventsCard extends Component {
        )};
 
        }
-  export default EventsCard
+  export default TeamsCard
 
 
 

@@ -28,15 +28,20 @@ const MY_SERVICE = {
     return service.get('/profile')
   },
 
+  getUsers: () => {
+    return service.get('/users')
+  },
+  
   updateUser: async (data, form) => {
     return await service.patch(data, form);
   },
 
-  createEvent: async (user) => {
-    return await service.post('/events', user);
+  addTeam: user => {
+    console.log(user)
+    return service.post('/teams', user);
   },
-  getEvents: async () => {
-    return await service.get('/events');
+  getTeams: async () => {
+    return await service.get('/teams');
   },
 
   getEvent: async (data) => {

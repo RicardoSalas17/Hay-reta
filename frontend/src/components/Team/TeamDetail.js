@@ -13,7 +13,7 @@ mapboxgl.accessToken =
 
 
 
-class EventDetail extends Component {
+class TeamDetail extends Component {
 
     state = {
       formComment:{
@@ -209,5 +209,5 @@ class EventDetail extends Component {
   }
 
 
-export default EventDetail
+export default TeamDetail
 

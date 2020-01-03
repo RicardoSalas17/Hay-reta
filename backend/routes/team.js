@@ -9,10 +9,10 @@ const {
 } = require("../controllers/team.controller");
 
 
-// Projects
+
 router.get("/teams", getTeams);
 router.get("/team/:id", getTeam);
-router.post("/teams/:id", createTeam);
+router.post("/teams",upload.single("image"), createTeam);
 router.patch("/teams/:id", updateTeam);
 router.delete("/teams/:id", deleteTeam);
 

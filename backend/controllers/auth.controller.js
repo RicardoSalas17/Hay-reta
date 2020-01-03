@@ -1,11 +1,20 @@
 const User = require('../models/User')
 
+exports.getUsers= async(req,res) => {
+
+  const users = await User.find().populate({path:"matchs"})
+  .populate({
+   path:"teams"})
+ res.status(200).json({ users });
+}
+
 exports.createUser = async (req, res) => {
   const { 
      name,
     email
        } = req.body
      let createUser
+
 
   if (req.file) {
     createUser ={
@@ -61,8 +70,14 @@ exports.login = (req, res, next) => {
 }
 
 exports.getUser = async (req, res, next) => {
+
   const user = await User.findById(req.user._id).populate({
     path:"teams",
+    // populate:{ 
+    // path: "comments",
+    // model:"Comments",
+    // populate:{path:"subComments"}
+    // }
     })
   res.status(200).json({ user })
 }

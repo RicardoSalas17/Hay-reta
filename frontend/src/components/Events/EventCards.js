@@ -13,16 +13,16 @@ class EventsCard extends Component {
     events: []
   }
 
-  async componentDidMount()  {
-    const { data } = await MY_SERVICE.getEvents()
-    this.setState({ events: [...data.events] })
+  // async componentDidMount()  {
+  //   const { data } = await MY_SERVICE.getEvents()
+  //   this.setState({ events: [...data.events] })
     
-  }
-  async componentDidUpdate()  {
-    const { data } = await MY_SERVICE.getEvents()
-    this.setState({ events: [...data.events] })
+  // }
+  // async componentDidUpdate()  {
+  //   const { data } = await MY_SERVICE.getEvents()
+  //   this.setState({ events: [...data.events] })
     
-  }
+  // }
 
   render() {
     const { events } = this.state
