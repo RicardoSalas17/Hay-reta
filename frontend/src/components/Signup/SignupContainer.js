@@ -4,9 +4,9 @@ import { MyContext } from "../../context";
 
 export default class SignupContainer extends React.Component {
   componentWillMount() {
-    console.log(this.context)
+
     if (this.context.loggedUser) {
-      return this.props.history.push("/profile");
+      return this.props.history.push(`/profile`);
     }
   }
   render() {
@@ -21,7 +21,7 @@ export default class SignupContainer extends React.Component {
                 context.handleSignup(e);
                 const { user } = context
                 if (user) {
-                  this.props.history.push("/profile");
+                  this.props.history.push(`/profile`);
                 } else{
                   return (
                     <div className="App">

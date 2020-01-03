@@ -67,6 +67,16 @@
     margin-bottom: 10%;
   }
 
+  h2{
+    color: white;
+
+  }
+  h3{
+    color: white;
+    padding-left: 10vh;
+
+  }
+
   .backgroundprofile Button{
     margin-left: 40%;
   }

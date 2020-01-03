@@ -73,11 +73,11 @@ exports.getUser = async (req, res, next) => {
 
   const user = await User.findById(req.user._id).populate({
     path:"teams",
-    // populate:{ 
-    // path: "comments",
-    // model:"Comments",
+    populate:{ 
+    path: "players",
+    model:"User",
     // populate:{path:"subComments"}
-    // }
+    }
     })
   res.status(200).json({ user })
 }

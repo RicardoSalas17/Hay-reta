@@ -6,7 +6,7 @@ const teamSchema = new Schema(
     name: String,
     image: {
       type: String,
-      // default: 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'
+      default: 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'
      },
     matchs: [{
       type: Schema.Types.ObjectId,

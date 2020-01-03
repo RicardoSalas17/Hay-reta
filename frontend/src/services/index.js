@@ -37,14 +37,14 @@ const MY_SERVICE = {
   },
 
   addTeam: user => {
-    console.log(user)
+
     return service.post('/teams', user);
   },
   getTeams: async () => {
     return await service.get('/teams');
   },
 
-  getEvent: async (data) => {
+  getTeam: async (data) => {
     return await service.get(data);
   },
 

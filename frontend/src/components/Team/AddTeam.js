@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import MY_SERVICE from '../../services/index';
 import { Form, Input, Button, Select } from 'antd'
 import { MyContext } from '../../context'
+import { Skeleton } from 'antd'
 
 const { Option } = Select;
 
@@ -21,17 +22,20 @@ export default class AddTeam extends Component {
     async componentDidMount()  {
     const { data } = await MY_SERVICE.getUsers()
     this.setState({ users: [...data.users] })
-
-
     for (let i = 0; i < this.state.users.length; i++) {
         children.push(<Option value={this.state.users[i]._id} key= {i} >{this.state.users[i].name}</Option>);
       }
-
-    
   }
-
-
   render() {
+    const { users } = this.state
+
+    if (!users) {
+      return (
+        <div className="App">
+        <Skeleton avatar paragraph={{ rows: 4 }} />
+        </div>
+      )
+    }
     return (
         <MyContext.Consumer>
         {context => (
@@ -43,11 +47,10 @@ export default class AddTeam extends Component {
             className="container"
             onSubmit={e => {
               context.createTeam(e);
-              this.props.history.push("/profile");
+              this.props.history.push(`/profile`);
               
             }}
             >
-
             <Form.Item>
             <Input
             name="name"

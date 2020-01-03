@@ -5,7 +5,7 @@ const Team = require("../models/Team");
 exports.getTeams = async (req, res) => {
   const team = await Team.find().populate("owner")
    .populate({
-    path:"Team"})
+    path:"players"})
   res.status(200).json({ team });
 };
 
@@ -13,12 +13,11 @@ exports.getTeam = async (req, res) => {
   const { id } = req.params;
   const team = await Team.findById(id).populate("owner")
   .populate({
-  path:"comments",
-  populate:{ 
-  path: "owner",
-  model:"User",
-  }})
-  
+  path:"matchs",
+  })
+  .populate({
+    path:"players",
+    })
   res.status(200).json(team);
 };
 
@@ -34,7 +33,7 @@ exports.createTeam = async (req, res) => {
 
 
   if (req.file) {
-    createMatch =  {
+    createTeam =  {
       name,
     players:plays,
     owner: user._id,
@@ -44,24 +43,27 @@ exports.createTeam = async (req, res) => {
 
     
   }else {
-    createMatch ={
+    createTeam ={
       name,
     players:plays,
     owner: user._id
     } 
     
     }
-    const matchCreated = await Team.create(createMatch);
-  const userUpdated = await User.findByIdAndUpdate(
-    user._id,
-    { $push: { teams:matchCreated._id } },
-    { new: true }
-  );
+    const teamCreated = await Team.create(createTeam);
 
-  req.user = userUpdated;
+    for(i=0; i<plays.length; i++){
+      const userUpdated = await User.findByIdAndUpdate(
+        plays[i],
+        { $push: { teams:teamCreated._id } },
+        { new: true }
+      );
+      req.user = userUpdated;
+    }
 
-  res.status(201).json(matchCreated);
-  console.log(matchCreated)
+
+  res.status(201).json(teamCreated);
+  console.log(teamCreated)
 
 };
 

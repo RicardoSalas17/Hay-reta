@@ -5,7 +5,7 @@ import { MyContext } from "../../context";
 export default class LoginContainer extends React.Component {
   componentDidUpdate() {
     if (this.context.loggedUser) {
-      return this.props.history.push("/profile");
+      return this.props.history.push(`/profile`);
     }
   }
 
@@ -19,7 +19,7 @@ export default class LoginContainer extends React.Component {
                 className=" p-2 p-md-5"
                 onSubmit={e => {
                   context.handleLogin(e, () => {
-                    this.props.history.push("/profile");
+                    this.props.history.push(`/profile`);
                   });
                 }}
               >

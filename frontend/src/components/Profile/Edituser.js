@@ -51,7 +51,7 @@ export default class EditUser extends Component {
         image:'',
       }
     })
-    this.props.history.push('/profile')
+    this.props.history.push(`/profile`)
  
   };
 
@@ -65,7 +65,7 @@ export default class EditUser extends Component {
             className="container"
             onSubmit={e => {
               this.editEvent(e)
-              this.props.history.push('/profile')
+              this.props.history.push(`/profile`)
             }}
             >
             

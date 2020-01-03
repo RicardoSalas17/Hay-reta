@@ -29,17 +29,16 @@ class MyProvider extends Component {
   }
 
   componentDidMount() {
-    // if (!document.cookie) {
-    //   MY_SERVICE.getUser()
-    //     .then(({ data }) => {
-    //       this.setState({ loggedUser: true, user: data.user })
-    //       Swal.fire(`Welcome back ${data.user.name} `, '', 'success')
-    //     })
-    //     .catch(err => console.log(err))
-    // }
+    if (!document.cookie) {
+      MY_SERVICE.getUser()
+        .then(({ data }) => {
+          this.setState({ loggedUser: true, user: data.user })
+          Swal.fire(`Welcome back ${data.user.name} `, '', 'success')
+        })
+        .catch(err => console.log(err))
+    }
 
     if(this.state.loggedUser){
-
       MY_SERVICE.getUsers()
       .then(({ data }) => {
         this.setState({users: data })
@@ -47,27 +46,41 @@ class MyProvider extends Component {
       .catch(err => console.log(err))
     
     }
+  }componentWillUpdate(){
+  if (!document.cookie) {
+    MY_SERVICE.getUser()
+      .then(({ data }) => {
+        this.setState({ loggedUser: true, user: data.user })
+      })
+      .catch(err => console.log(err))
   }
 
-  componentDidUpdate() {
-    MY_SERVICE.getUser()
+  if(this.state.loggedUser){
+    MY_SERVICE.getUsers()
     .then(({ data }) => {
-      this.setState({ loggedUser: true, user: data.user })
+      this.setState({users: data })
     })
     .catch(err => console.log(err))
-// if(this.state.loggedUser){
-
-//   MY_SERVICE.getUsers()
-//   .then(({ data }) => {
-//     this.setState({users: data })
-//   })
-//   .catch(err => console.log(err))
-
-// }
-
+  
   }
 
+}
 
+handleUser =()=>{
+  MY_SERVICE.getUser()
+  .then(({ data }) => {
+    this.setState({ loggedUser: true, user: data.user })
+  })
+  .catch(err => console.log(err))
+}
+
+handleUsers=()=>{
+  MY_SERVICE.getUsers()
+      .then(({ data }) => {
+        this.setState({users: data })
+      })
+      .catch(err => console.log(err))
+}
 
   handleInput = (e, obj) => {
     const a = this.state[obj]
@@ -100,7 +113,6 @@ handleChange= (e,a, c) =>{
     }
     formData.append('image', this.state.file)
     const user = await MY_SERVICE.signup(formData)
-    console.log(user)
     Swal.fire(`Bienvenido ${user.data.name}`, 'Gracias por registrate', 'success')
     this.setState({ loggedUser: true, user: user.data })
     this.setState({ 
@@ -133,6 +145,7 @@ handleChange= (e,a, c) =>{
     window.localStorage.clear()
     this.setState({ loggedUser: false, user: {} })
     cb()
+
   }
 
 
@@ -149,7 +162,7 @@ handleChange= (e,a, c) =>{
     formDatas.append('image', this.state.file)
 
     const team = await MY_SERVICE.addTeam(formDatas)
-    console.log(team)
+
 
     Swal.fire(`Team ${team.data.name} `, 'Team created', 'success')
     this.setState({ 
@@ -178,6 +191,7 @@ handleChange= (e,a, c) =>{
           handlecreateEvent: this.handlecreateEvent,
           handleFile:this.handleFile,
           handleUser:this.handleUser,
+          handleUsers:this.handleUsers,
           handleupdateEvent:this.handleupdateEvent,
           createTeam:this.createTeam,
           users:this.state.users,

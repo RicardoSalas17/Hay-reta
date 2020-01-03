@@ -8,7 +8,7 @@ import LoginContainer from './components/Login/LoginContainer'
 import upContainer from './components/Events/EventsContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import AddEvent from './components/Events/AddEvent';
-import EventDetail from './components/Events/EventDetail';
+import TeamDetail from './components/Team/TeamDetail';
 import Editevent from './components/Events/Editevent';
 import EditUser from './components/Profile/Edituser';
 import AddTeam from './components/Team/AddTeam';
@@ -24,7 +24,7 @@ const Router = () => (
       <Route exact path="/signup" component={SignupContainer} />
       <Route exact path="/login"  component={LoginContainer} />
       <Route exact path="/events" component={upContainer} />
-      <Route exact path="/events/:id" component={EventDetail} />
+      <Route exact path="/team/:id" component={TeamDetail} />
       <Route exact path="/addevents" component={AddEvent} />
       <Route exact path="/addteam" component={AddTeam} />
       <Route exact path="/editevents/:id" component={Editevent} />
