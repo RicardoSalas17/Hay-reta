@@ -17,7 +17,9 @@ exports.getTeam = async (req, res) => {
   })
   .populate({
     path:"players",
-    })
+    }) .populate({
+      path:"owner",
+      })
   res.status(200).json(team);
 };
 
@@ -26,7 +28,7 @@ exports.createTeam = async (req, res) => {
     players
           } = req.body
   const { user } = req;
-  let createMatch;
+  let createTeam;
 
  const plays = (players.split(','))
 
@@ -63,9 +65,15 @@ exports.createTeam = async (req, res) => {
 
 
   res.status(201).json(teamCreated);
-  console.log(teamCreated)
 
 };
+
+
+
+
+
+
+
 
 
 
@@ -73,34 +81,47 @@ exports.createTeam = async (req, res) => {
 exports.updateTeam = async (req, res) => {
   const {name,
     players,
-    
           } = req.body
           const { id } = req.params
-          let matchUpdate
+          const plays = (players.split(','))
+          let teamUpdate
 
   if (req.file) {
-     matchUpdate = await Team.findByIdAndUpdate(id,{
+     teamUpdate = await Team.findByIdAndUpdate(id,{
       $set:
-    { name,
-      players,
+    {  name,
+      players:plays,
     image: req.file.secure_url}
       
     })}
   else {
-     matchUpdate = await Team.findByIdAndUpdate(id,{
+     teamUpdate = await Team.findByIdAndUpdate(id,{
     $set:
    {
     name,
-    players
-
+    players:plays,
     } 
   })
 }
 
-Team.findOneAndUpdate(id, matchUpdate) 
 
-  res.status(201).json(matchUpdate);
+Team.findOneAndUpdate(id, teamUpdate) 
+
+  res.status(201).json(teamUpdate);
 };
+
+
+
+exports.deleteTeam =async (req, res) => {
+  const { id } = req.params
+  const user = await Team.findByIdAndDelete(id)
+  res.status(200).json(user);
+};
+
+
+
+
+
 
 
 

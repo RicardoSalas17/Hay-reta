@@ -8,6 +8,10 @@ const matchSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Team"
     }],
+    players:[{
+      type: Schema.Types.ObjectId,
+      ref: "User",
+    }],
     dateTime: String,
     localTime: String,
     description: String,

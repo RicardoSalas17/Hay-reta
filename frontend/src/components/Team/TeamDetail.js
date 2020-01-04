@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MY_SERVICE from '../../services/index';
 import { Link, Redirect} from 'react-router-dom'
 import { MyContext } from "../../context";
-import { Skeleton } from 'antd'
+import { Skeleton,Button } from 'antd'
 
 class TeamDetail extends Component {
     state = {
@@ -37,7 +37,6 @@ class TeamDetail extends Component {
 
     const { team } = this.state
     if (!team) {
-      console.log(team)
       return (
         <div className="App">
         <Skeleton avatar paragraph={{ rows: 4 }} />
@@ -61,7 +60,9 @@ class TeamDetail extends Component {
                 <div className="col-12 col-md-4">
                 <img src={`${team.image}`} className="evento-privado-img py-auto" alt={`${team.name}`} />
                 </div>
-                
+                <div className="text-center mt-2 mt-md-5">
+              
+            </div>
                 <div className="col-12 col-md-6 text-white">
                   <h2 className="text-center">
                     
@@ -71,7 +72,8 @@ class TeamDetail extends Component {
                     <p>
                       <b>Players:</b>
                     </p>
-                    {team.players.map(({ 
+                    {team.players ? 
+                      team.players.map(({ 
                      _id,
                      name
                     } ) => (
@@ -80,8 +82,24 @@ class TeamDetail extends Component {
                       {name}
                       </h3>
                       </div>
-                    )) }
+                    )) : (
+                      <div className="App">
+                      <Skeleton avatar paragraph={{ rows: 4 }} />
+                      </div>
+                    ) }
                   </div>
+                  <Link className="event-button" exact to={`/editteams/${team._id}`} >
+                Edit team
+              </Link>
+
+              <Button 
+              onClick={e => {
+                context.deleteTeam(`/team/${team._id}`);
+                return <Redirect exact to="/profile"/>
+              }}
+              className="event-button"  >
+                Delete Team
+              </Button>
                   </div>
                 </div>
                 <div>
@@ -117,4 +135,3 @@ class TeamDetail extends Component {
 
 
 export default TeamDetail
-

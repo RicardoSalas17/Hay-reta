@@ -21,7 +21,8 @@ class MyProvider extends Component {
     teamForm: {
       name:'',
       image:'',
-      players:[]
+      players:[],
+
       },
     user: {},
     file:{},
@@ -55,14 +56,14 @@ class MyProvider extends Component {
       .catch(err => console.log(err))
   }
 
-  if(this.state.loggedUser){
-    MY_SERVICE.getUsers()
-    .then(({ data }) => {
-      this.setState({users: data })
-    })
-    .catch(err => console.log(err))
+  // if(this.state.loggedUser){
+  //   MY_SERVICE.getUsers()
+  //   .then(({ data }) => {
+  //     this.setState({users: data })
+  //   })
+  //   .catch(err => console.log(err))
   
-  }
+  // }
 
 }
 
@@ -95,7 +96,6 @@ handleChange= (e,a, c) =>{
   const key = c
   s[key] = e
   this.setState({ obj: {s}})
-
 }
 
   handleFile = e => {
@@ -149,7 +149,40 @@ handleChange= (e,a, c) =>{
   }
 
 
+  deletUser = async (a) => {
+    await MY_SERVICE.deletUser(a)
+    window.localStorage.clear()
+    this.setState({ loggedUser: false, user: {} })
+  }
 
+  deleteTeam= async (a) => {
+    await MY_SERVICE.deleteTeam(a)
+
+  }
+
+
+  updateTeam= async (e,a) => {
+    e.preventDefault()
+    const { teamForm } = this.state;
+    const formDatas = new FormData()
+
+    for(let key in teamForm){
+      formDatas.append(key, this.state.teamForm[key])
+    }
+    formDatas.append('image', this.state.file)
+
+    const team = await MY_SERVICE.updateTeam(a,formDatas)
+
+
+    Swal.fire(`Team ${team} `, 'Team created', 'success')
+    this.setState({ 
+      teamForm: {
+            name: '',
+             image:'',
+             players:[]
+      }
+    })
+  }
   
   createTeam = async e=> {
     e.preventDefault()
@@ -185,12 +218,15 @@ handleChange= (e,a, c) =>{
           loginForm: this.state.loginForm,
           user: this.state.user,
           handleInput: this.handleInput,
+          updateTeam:this.updateTeam,
           handleSignup: this.handleSignup,
           handleLogin: this.handleLogin,
           handleLogout: this.handleLogout,
           handlecreateEvent: this.handlecreateEvent,
           handleFile:this.handleFile,
           handleUser:this.handleUser,
+          deletUser:this.deletUser,
+          deleteTeam:this.deleteTeam,
           handleUsers:this.handleUsers,
           handleupdateEvent:this.handleupdateEvent,
           createTeam:this.createTeam,

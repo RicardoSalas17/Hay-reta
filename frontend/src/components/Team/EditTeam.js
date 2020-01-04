@@ -1,140 +1,104 @@
 import React, { Component } from "react";
-import { Form, Input, Button } from 'antd'
-import { MyContext } from '../../context'
 import MY_SERVICE from '../../services/index';
-import Swal from 'sweetalert2'
+import { Form, Input, Button, Select } from 'antd'
+import { Link, Redirect} from 'react-router-dom'
+import { MyContext } from '../../context'
+import { Skeleton } from 'antd'
+
+const { Option } = Select;
+
+const children = [];
 
 
-export default class EditTeam extends Component {
-  state = {
+export default class editTeams extends Component {
 
-      formEvent: {
-        eventName: '',
-        dateTime: '',
-        localTime: '',
-        description: ''},
-        file: {},
-        id:`${this.props.location.pathname}`
-        
-  };
-
-  handleFile = e => {
-    this.setState({ file: e.target.files[0] })
+  state={
+    users:[]
+  }
+    async componentDidMount()  {
+      console.log()
+      console.log(this.props.location.pathname)
+    const { data } = await MY_SERVICE.getUsers()
+    this.setState({ users: [...data.users] })
+    for (let i = 0; i < this.state.users.length; i++) {
+        children.push(<Option value={this.state.users[i]._id} key= {i} >{this.state.users[i].name}</Option>);
+      }
   }
 
-  inputChange = ({ target: {value, name} }) =>{
-    this.setState({
-      ...this.state,
-      formEvent:{
-        ...this.state.formEvent,
-        [name]:value
-      }
-    });
-  };
 
-
-  editEvent = async e => {
-    e.preventDefault();
-    const { formEvent } = this.state;
-    const formData = new FormData()
-
-    for(let key in formEvent){
-      formData.append(key, this.state.formEvent[key])
-    }
-    formData.append('image', this.state.file)
-    
-
-    const event = await MY_SERVICE.updateEvent(`${this.props.location.pathname}`,formData)
-
-    Swal.fire( 'Evento Editado', 'success')
-    this.setState({ 
-      formEvent: {
-        eventName: '',
-        dateTime: '',
-        localTime: '',
-        description: '',
-        image:'',
-      }
-    })
-    this.props.history.push('/events')
- 
-  };
 
   render() {
+    const { users } = this.state
+
+    if (!users) {
+      const { data } =  MY_SERVICE.getUsers()
+      this.setState({ users: [...data.users] })
+      for (let i = 0; i < this.state.users.length; i++) {
+          children.push(<Option value={this.state.users[i]._id} key= {i} >{this.state.users[i].name}</Option>);
+        }
+      return (
+        <div className="App">
+        <Skeleton avatar paragraph={{ rows: 4 }} />
+        </div>
+      )
+    } else{
     return (
         <MyContext.Consumer>
-        {context => (
+        {context => {
+          if (!context.loggedUser) {
+            return <Redirect to="/login" />
+           } else{
+          return(
       <div className="backgroundCard">
-      <div class="text-center py-2 py-md-5">
-      <h1>Edit Event</h1>
-      
+      <div className="text-center">
+      <h1>Add Team</h1>
       </div>
-     
         <Form
-            className="container py-2 py-md-5"
+            className="container"
             onSubmit={e => {
-              this.editEvent(e)
-              this.props.history.push('/events')
+              context.updateTeam(e, `/editteam/${this.props.match.params.id}`);
+              this.props.history.push(`/profile`);
             }}
             >
-            
             <Form.Item>
             <Input
-            name="eventName"
+            name="name"
             type="text"
-            placeholder="eventName"
-          value={this.state.formEvent.eventName}
-          onChange={this.inputChange}
+            placeholder="name"
+            value={context.teamForm.name}
+          onChange={e => context.handleInput(e, "teamForm")}
         />
       </Form.Item>
-          <Form.Item>
-            <Input
-              name="dateTime"
-              // placeholder="000"
-              type="date"
-              value={this.state.formEvent.dateTime}
-              onChange={this.inputChange}
-            />
-          </Form.Item>
 
           <Form.Item>
             <Input
-              name="localTime"
-              type="time"
-              placeholder="Time"
-              value={this.state.formEvent.localTime}
-              onChange={this.inputChange}
-            />
+            name="image"
+            type="file"
+            placeholder="Image"
+            onChange={e => context.handleFile(e, "file")}/>
           </Form.Item>
 
           <Form.Item>
-            <Input
-              name="description"
-              type="text"
-              placeholder="Description"
-              value={this.state.formEvent.description}
-              onChange={this.inputChange}
-            />
+          <Select
+          mode="multiple"
+          placeholder="players"
+          style={{ width: '100%' }}
+          onChange={e => context.handleChange(e, "teamForm","players" )}
+        >
+        {children}
+        </Select>
           </Form.Item>
-
+          
+          
           <Form.Item>
-            <Input
-              name="image"
-              type="file"
-              placeholder="Image"
-              // value={this.state.formEvent.image}
-              onChange={this.handleFile}/>
-          </Form.Item>
-
-          <Form.Item className="text-center">
             <Button type="primary" htmlType="submit">
               Create
             </Button>
           </Form.Item>
         </Form>
       </div>
-    )}
+    )}}}
     </MyContext.Consumer>
-        )
+        )}
         }
     }

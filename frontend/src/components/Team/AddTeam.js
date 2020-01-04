@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MY_SERVICE from '../../services/index';
 import { Form, Input, Button, Select } from 'antd'
+import { Link, Redirect} from 'react-router-dom'
 import { MyContext } from '../../context'
 import { Skeleton } from 'antd'
 
@@ -17,8 +18,6 @@ export default class AddTeam extends Component {
     users:[]
   }
 
-
-
     async componentDidMount()  {
     const { data } = await MY_SERVICE.getUsers()
     this.setState({ users: [...data.users] })
@@ -30,15 +29,24 @@ export default class AddTeam extends Component {
     const { users } = this.state
 
     if (!users) {
+      const { data } =  MY_SERVICE.getUsers()
+      this.setState({ users: [...data.users] })
+      for (let i = 0; i < this.state.users.length; i++) {
+          children.push(<Option value={this.state.users[i]._id} key= {i} >{this.state.users[i].name}</Option>);
+        }
       return (
         <div className="App">
         <Skeleton avatar paragraph={{ rows: 4 }} />
         </div>
       )
-    }
+    } else{
     return (
         <MyContext.Consumer>
-        {context => (
+        {context => {
+          if (!context.loggedUser) {
+            return <Redirect to="/login" />
+           } else{
+          return(
       <div className="backgroundCard">
       <div className="text-center">
       <h1>Add Team</h1>
@@ -88,9 +96,9 @@ export default class AddTeam extends Component {
           </Form.Item>
         </Form>
       </div>
-    )}
+    )}}}
     </MyContext.Consumer>
-        )
+        )}
         }
     }
 

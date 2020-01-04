@@ -22,7 +22,9 @@ background: rgba(0, 0, 0, 0.863) !important;
   & a.navbar-active {
     color: blue;
   }
-  & span {
+  & button {
+    background: none;
+    border: none;
     color: red;
     padding: 5px 5px 5px 10px;
   }
@@ -73,22 +75,34 @@ function Navbar(props) {
               >
               Add Team
               </NavLink>
+
           )}
 
             
 
-            {context.loggedUser && (
+            
             
                 <NavLink
-                exact to="/events" activeClassName="navbar-active"
+                exact to="/matchs" activeClassName="navbar-active"
                 >
                  Matches
                 </NavLink>
            
-            )}
+          
+            
+
+            {context.loggedUser && (
+            
+              <NavLink
+              exact to="/addmatchs" activeClassName="navbar-active"
+              >
+              Add  Match
+              </NavLink>
+         
+          )}
             
             {context.loggedUser && (
-              <span
+              <button
                 onClick={() =>
                   context.handleLogout(() => {
                     props.history.push('/login')
@@ -96,7 +110,7 @@ function Navbar(props) {
                 }
               >
                 Logout
-              </span>
+              </button>
             )}
           </StyledNavbar>
         )

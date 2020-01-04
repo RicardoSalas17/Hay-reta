@@ -29,9 +29,28 @@ exports.createMatch = async (req, res) => {
     lng,
     lat,
     direction,
-    matchType
-    
+    matchType,
+    players,
+    Teams
           } = req.body
+
+console.log(req.body)
+
+let p
+if(players.includes(",")){
+  p=(players.split(','))
+}else{
+  p=players
+}
+
+
+let t
+if(Teams.includes(",")){
+  t=(Teams.split(','))
+}else{
+  t=Teams
+}
+
 
   const { user } = req;
   let createMatch;
@@ -41,6 +60,9 @@ exports.createMatch = async (req, res) => {
     createMatch =  {
       matchName,
       dateTime,
+      players:p,
+      teams:t,
+
       localTime,
       description,
       lng,
@@ -62,6 +84,8 @@ exports.createMatch = async (req, res) => {
       lat,
       direction,
       matchType,
+      players:p,
+      teams:t,
     owner: user._id
     } 
     

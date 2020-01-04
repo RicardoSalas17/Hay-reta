@@ -1,34 +1,43 @@
 import React, { Component } from "react";
-import { Form, Input, Button } from 'antd'
+import { Form, Input, Button, Select} from 'antd'
 import { MyContext } from '../../context'
 import MY_SERVICE from '../../services/index';
 import Swal from 'sweetalert2'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import mapboxgl from 'mapbox-gl' 
-// import ProjectsService from "../../services/ProjectsService";
 
-// const projectsService = new ProjectsService();
 mapboxgl.accessToken =
 'pk.eyJ1IjoiZGl1cml2aiIsImEiOiJjanAxdjA2cTQwMGp1M2tvYzZmZGp3bWc3In0.4cZEyLkU2ikqx_wb4A1z8A'
 
-export default class AddEvent extends Component {
-  state = {
+const { Option } = Select;
 
-      formEvent: {
-        eventName: '',
+const children = [];
+const childrens = [];
+
+export default class AddMatch extends Component {
+  state = {
+      matchForm: {
+        matchName: '',
+        matchType:'',
         dateTime: '',
         localTime: '',
         description: '',
         lng: '',
         lat: '',
+        players:[],
+        teams:[],
         direction:''},
         lng: 5,
         lat: 34,
         zoom: 1.5,
         file: {},
+        users:[],
+        teams:[]
   };
 
  
+
+
   handleFile = e => {
     this.setState({ file: e.target.files[0] })
   }
@@ -36,52 +45,73 @@ export default class AddEvent extends Component {
   inputChange = ({ target: {value, name} }) =>{
     this.setState({
       ...this.state,
-      formEvent:{
-        ...this.state.formEvent,
+      matchForm:{
+        ...this.state.matchForm,
         [name]:value
       }
     });
   };
+  // handleChange= (e,a, c) =>{
+  //   const s = this.state[a]
+  //   const key = c
+  //   s[key] = e
+  //   this.setState({ obj: {s}})
+  // }
 
-
-  addEvent = async e => {
+  addMatch = async e => {
     e.preventDefault();
-    const { formEvent,
+    const { matchForm,
       } = this.state;
     const formData = new FormData()
 
-    for(let key in formEvent){
-      formData.append(key, this.state.formEvent[key])
+    for(let key in matchForm){
+      formData.append(key, this.state.matchForm[key])
     }
     formData.append('image', this.state.file)
 
     
-    const event = await MY_SERVICE.createEvent(formData)
-    Swal.fire( 'Event created', 'success')
+    const match = await MY_SERVICE.createMatch(formData)
+    Swal.fire( `Match ${match.name} created`, 'success')
     this.setState({ 
-      formEvent: {
-        eventName: '',
+      matchForm: {
+        matchName: '',
+        matchType:'',
         dateTime: '',
         localTime: '',
         description: '',
-        image:'',
         lng: '',
         lat: '',
         direction:''
       }
     })
-    this.props.history.push('/events')
+    this.props.history.push('/matchs')
+    
   };
 
-  componentDidMount() {
+ 
+  async componentDidMount() {
+      const { data } = await MY_SERVICE.getTeams()
+
+    this.setState({ teams: [...data.team] })
+    for (let i = 0; i < this.state.teams.length; i++) {
+      childrens.push(<Option value={this.state.teams[i]._id} key= {i} >{this.state.teams[i].name}</Option>);
+      }
+      const hola = await MY_SERVICE.getUsers()
+
+      this.setState({ users: [...hola.data.users] })
+      for (let i = 0; i < this.state.users.length; i++) {
+          children.push(<Option value={this.state.users[i]._id} key= {i} >{this.state.users[i].name}</Option>);
+        }
     const { lng, lat, zoom } = this.state
     const geocoder = new MapboxGeocoder({
+      
       accessToken: mapboxgl.accessToken
     })
     const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: 'mapbox://styles/mapbox/streets-v9',
       center: [lng, lat],
+      marker: true,
       zoom
     })
 
@@ -100,7 +130,7 @@ export default class AddEvent extends Component {
       
 
       this.setState({
-        formEvent:{
+        matchForm:{
         lng: e.result.geometry.coordinates[0],
         lat: e.result.geometry.coordinates[1],
         direction:`${e.result.place_name}`
@@ -109,6 +139,12 @@ export default class AddEvent extends Component {
 
     })
   }
+  handleChange= (e,a, c) =>{
+    const s = this.state[a]
+    const key = c
+    s[key] = e
+    this.setState({ obj: {s}})
+  }
   render() {
     return (
         <MyContext.Consumer>
@@ -116,33 +152,41 @@ export default class AddEvent extends Component {
       <div className="backgroundCard">
 
       <div className="text-center">
-      <h1>Add Event</h1>
+      <h1>Add Match</h1>
       </div>
         <Form
             className="container"
             onSubmit={e => {
-              this.addEvent(e)
-              this.props.history.push('/events')
-              // Redirect('/events')
-              // context.handleEvents()
+              this.addMatch(e)
+              this.props.history.push('/matchs')
             }}
             >
             <div className="map" style={{ width: '400px', height: '300px'}} ref={e => (this.mapContainer = e)}/>
             <Form.Item>
             <Input
-            name="eventName"
+            name="matchName"
             type="text"
-            placeholder="eventName"
-          value={this.state.formEvent.eventName}
+            placeholder="matchName"
+          value={this.state.matchForm.matchName}
           onChange={this.inputChange}
         />
       </Form.Item>
+
+      <Form.Item>
+            <Input
+              name="matchType"
+              type="text"
+              placeholder="matchType"
+              value={this.state.matchForm.matchType}
+              onChange={this.inputChange}
+            />
+          </Form.Item>
+
           <Form.Item>
             <Input
               name="dateTime"
-              // placeholder="000"
               type="date"
-              value={this.state.formEvent.dateTime}
+              value={this.state.matchForm.dateTime}
               onChange={this.inputChange}
             />
           </Form.Item>
@@ -152,9 +196,31 @@ export default class AddEvent extends Component {
               name="localTime"
               type="time"
               placeholder="Time"
-              value={this.state.formEvent.localTime}
+              value={this.state.matchForm.localTime}
               onChange={this.inputChange}
             />
+          </Form.Item>
+
+          <Form.Item>
+          <Select
+          mode="multiple"
+          placeholder="players"
+          style={{ width: '100%' }}
+          onChange={e => this.handleChange(e, "matchForm","players" )}
+        >
+        {children}
+        </Select>
+
+          </Form.Item>
+          <Form.Item>
+          <Select
+          mode="multiple"
+          placeholder="Teams"
+          style={{ width: '100%' }}
+          onChange={e => this.handleChange(e, "matchForm","Teams" )}
+        >
+        {childrens}
+        </Select>
           </Form.Item>
 
           <Form.Item>
@@ -162,7 +228,7 @@ export default class AddEvent extends Component {
               name="description"
               type="text"
               placeholder="Description"
-              value={this.state.formEvent.description}
+              value={this.state.matchForm.description}
               onChange={this.inputChange}
             />
           </Form.Item>
@@ -172,7 +238,6 @@ export default class AddEvent extends Component {
               name="image"
               type="file"
               placeholder="Image"
-              // value={this.state.formEvent.image}
               onChange={this.handleFile}/>
           </Form.Item>
           
@@ -190,7 +255,3 @@ export default class AddEvent extends Component {
         }
     }
 
-//     coordinates: Array(2)
-// 0: 36.33
-// 1: 41.28667
-// place_name_es-ES

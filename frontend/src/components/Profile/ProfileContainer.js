@@ -1,7 +1,7 @@
 import React from "react";
 import { MyContext } from "../../context";
 import { Link, Redirect} from 'react-router-dom'
-import { Skeleton } from 'antd'
+import { Skeleton, Button} from 'antd'
 export default function ProfileContainer() {
 
 
@@ -43,6 +43,18 @@ export default function ProfileContainer() {
                 Edit profile
               </Link>
             </div>
+
+            <div className="text-center mt-2 mt-md-5">
+              <Button 
+              onClick={e => {
+                context.deletUser(`/profile/${context.user._id}`);
+                return <Redirect to="/login" />
+              }}
+              className="event-button" exact to={`/profile/${context.user._id}`} >
+                Delete Profile
+              </Button>
+            </div>
+
           </div>
         </div>
         <div>
@@ -67,7 +79,9 @@ export default function ProfileContainer() {
             <div className="col-12 col-md-6 text-white">
               <h2 className="text-center">
                 
-              <b>Team Name:</b> {name} 
+              <div className="text-center mt-2">
+              <Link className="event-button" exact to={`/team/${_id}`} type="button" >{name}</Link>
+            </div>
               </h2>
               <div className="py-3">
                 <p>
@@ -81,18 +95,20 @@ export default function ProfileContainer() {
                 } ) => 
                 (
                   <div key={`${_id}`}>
-                  <h3>
-                  {name}
-                  </h3>
+                  <div>
+                  {_id === context.user._id ? 
+                    <h3> {name}</h3>
+                    :
+                    <Link className="event-button" exact to={`/profiles/${_id}`} type="button" > {name}</Link>
+                  }
+                  </div>
                   </div>
                 )) : <div className="App">
                 <Skeleton avatar paragraph={{ rows: 4 }} />
                 </div> 
               }
               </div>
-              <div className="text-center mt-2">
-                <Link className="event-button" exact to={`/team/${_id}`} type="button" >Detail</Link>
-              </div>
+              
             </div>
             </div>
             ))}

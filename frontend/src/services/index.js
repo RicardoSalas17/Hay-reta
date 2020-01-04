@@ -28,11 +28,26 @@ const MY_SERVICE = {
     return service.get('/profile')
   },
 
+  getotherUser: (data) => {
+    return service.get(data)
+  },
+  
   getUsers: () => {
     return service.get('/users')
   },
   
   updateUser: async (data, form) => {
+    return await service.patch(data, form);
+  },
+
+  deletUser: async (data) => {
+    return await service.delete(data)
+  },
+
+  deleteTeam: async (data) => {
+    return await service.delete(data)
+  },
+  updateTeam: async (data, form) => {
     return await service.patch(data, form);
   },
 
@@ -43,14 +58,19 @@ const MY_SERVICE = {
   getTeams: async () => {
     return await service.get('/teams');
   },
-
+  
+  getMatches: async () => {
+    return await service.get('/matchs');
+  },
+  
+  createMatch: async (user) => {
+    return await service.post('/matchs', user);
+  },
   getTeam: async (data) => {
     return await service.get(data);
   },
 
   updateEvent: async (data, form) => {
-
-
     return await service.patch(data, form);
   },
 
