@@ -34,11 +34,10 @@ exports.createMatch = async (req, res) => {
     Teams
           } = req.body
 
-console.log(req.body)
-
 let p
 if(players.includes(",")){
   p=(players.split(','))
+  
 }else{
   p=players
 }
@@ -62,7 +61,6 @@ if(Teams.includes(",")){
       dateTime,
       players:p,
       teams:t,
-
       localTime,
       description,
       lng,
@@ -96,8 +94,31 @@ if(Teams.includes(",")){
     { $push: { matchs:matchCreated._id } },
     { new: true }
   );
-
   req.user = userUpdated;
+
+
+if(p.length){
+  for(i=0; i<p.length; i++){
+  await User.findByIdAndUpdate(
+      p[i],
+      { $push: { matchs:matchCreated._id } },
+      { new: true }
+    );
+  }
+} else{
+  await User.findByIdAndUpdate(
+    players,
+    { $push: { matchs:matchCreated._id } },
+    { new: true }
+  );
+}
+
+
+
+
+
+
+
 
   res.status(201).json(matchCreated);
 };

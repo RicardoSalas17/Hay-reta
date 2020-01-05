@@ -62,7 +62,10 @@ const MY_SERVICE = {
   getMatches: async () => {
     return await service.get('/matchs');
   },
-  
+
+  getMatch: async (data) => {
+    return await service.get(data);
+  },
   createMatch: async (user) => {
     return await service.post('/matchs', user);
   },

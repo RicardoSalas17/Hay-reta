@@ -78,7 +78,19 @@ exports.getUser = async (req, res, next) => {
     path: "players",
     model:"User",
     }
-    })
+    }).populate({
+      path:"matchs",
+      populate:{ 
+      path: "players",
+      model:"User",
+      }
+      }).populate({
+        path:"matchs",
+        populate:{ 
+        path: "teams",
+        model:"Team",
+        }
+        })
   res.status(200).json({ user })
 }
 

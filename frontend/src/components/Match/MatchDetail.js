@@ -13,7 +13,7 @@ mapboxgl.accessToken =
 
 
 
-class EventDetail extends Component {
+class MatchDetail extends Component {
 
     state = {
       formComment:{
@@ -28,8 +28,8 @@ class EventDetail extends Component {
 
     async componentDidMount() {
         const { id } = this.props.match.params
-        const { data } = await MY_SERVICE.getEvent(`/events/${id}`)
-        this.setState({ event: { ...data } })
+        const { data } = await MY_SERVICE.getMatch(`/matchs/${id}`)
+        this.setState({ match: { ...data } })
 
 
         const {  zoom } = this.state
@@ -48,7 +48,7 @@ class EventDetail extends Component {
           
     
           this.setState({
-            formEvent:{
+            formMatch:{
             lng: e.result.geometry.coordinates[0],
             lat: e.result.geometry.coordinates[1],
             direction:`${e.result.place_name}`
@@ -60,15 +60,15 @@ class EventDetail extends Component {
 
       async componentDidUpdate(){
         const { id } = this.props.match.params
-        const { data } = await MY_SERVICE.getEvent(`/events/${id}`)
-        this.setState({ event: { ...data } })
+        const { data } = await MY_SERVICE.getMatch(`/matchs/${id}`)
+        this.setState({ match: { ...data } })
       }
 
       inputChange = ({ target: {value, name} }) =>{
         this.setState({
           ...this.state,
           formComment:{
-            ...this.state.formEvent,
+            ...this.state.formMatch,
             [name]:value
           }
         });
@@ -90,8 +90,8 @@ class EventDetail extends Component {
       };
 
   render(props) {
-    const { event } = this.state
-    if (!event) {
+    const { match } = this.state
+    if (!match) {
       return (
         <div className="App">
         <Skeleton avatar paragraph={{ rows: 4 }} />
@@ -107,22 +107,22 @@ class EventDetail extends Component {
         <div className="row">
           <div className="row detalle-evento-privado-div my-3 ">
             <div className="col-12 col-md-4">
-            <img src={`${event.image}`} className="evento-privado-img py-auto" alt={`${event.eventName}`} />
+            <img src={`${match.image}`} className="evento-privado-img py-auto" alt={`${match.matchName}`} />
             </div>
             <div className="col-12 col-md-6 text-white">
               <h2 className="text-center">
                
-                {event.eventName} 
+                {match.matchName} 
               </h2>
               <div className="py-3">
                 <p>
-                  <b>Fecha:</b>{event.dateTime}
+                  <b>Fecha:</b>{match.dateTime}
                 </p>
                 <p>
-                  <b>Horario:</b>{event.localTime}
+                  <b>Horario:</b>{match.localTime}
                 </p>
                 <p>
-                  <b>Descripción:</b>{event.description}
+                  <b>Descripción:</b>{match.description}
                 </p>
             
                 <div className="map mapcontainer" style={{ width: '400px', height: '300px'}} ref={e => (this.mapContainer = e)}/>
@@ -138,7 +138,7 @@ class EventDetail extends Component {
         </div>
 ​
 
-{event.comments.map(({ 
+{match.comments.map(({ 
   content,
   owner,
  _id }  
@@ -209,5 +209,5 @@ class EventDetail extends Component {
   }
 
 
-export default EventDetail
+export default MatchDetail
 

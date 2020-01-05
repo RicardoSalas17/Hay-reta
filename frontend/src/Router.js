@@ -13,6 +13,7 @@ import Profiles from './components/Profile/OtherProfile';
 import editTeams from './components/Team/EditTeam';
 import matchContainer from './components/Match/MatchContainer';
 import AddMatch from './components/Match/AddMatch';
+import MatchDetail from './components/Match/MatchDetail';
 
 
 
@@ -25,6 +26,7 @@ const Router = () => (
       <Route exact path="/signup" component={SignupContainer} />
       <Route exact path="/login"  component={LoginContainer} />
       <Route exact path="/matchs" component={matchContainer} />
+      <Route exact path="/match/:id" component={MatchDetail} />
       <Route exact path="/addmatchs" component={AddMatch} />
       <Route exact path="/team/:id" component={TeamDetail} />
       <Route exact path="/addteam" component={AddTeam} />

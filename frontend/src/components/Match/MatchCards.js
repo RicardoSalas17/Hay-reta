@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import MY_SERVICE from '../../services/index';
-import { Link } from 'react-router-dom'
 import { Skeleton } from 'antd'
-import {
-  Button
-} from 'reactstrap';
+
 
 
 class Matchcard extends Component {
@@ -64,12 +61,6 @@ class Matchcard extends Component {
        <p>Hora:{localTime}</p>
        <p>Descripción:{description}</p>
        <div className="text-center">
-       <Button > 
-       <Link exact to={`/matchs/${_id}`} type="button" >Detail</Link>
-      </Button>
-      <Button > 
-      <Link exact to={`/matchs/${_id}`} type="button" >Edit event</Link>
-     </Button>
        </div>
        </div>
        </div>

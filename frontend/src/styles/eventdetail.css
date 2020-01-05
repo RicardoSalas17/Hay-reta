@@ -73,13 +73,7 @@
 
   
   .evento-detalle-fondo {
-    background: rgb(187, 124, 230);
-    background: linear-gradient(
-      0deg,
-      rgba(187, 124, 230, 0.9374124649859944) 0%,
-      rgba(138, 181, 227, 0.8029586834733894) 55%,
-      rgba(42, 42, 42, 0.8113620448179272) 100%
-    );
+    background: rgba(37, 37, 37, 0.849)
   }
 
   .div-comentario{
@@ -92,7 +86,6 @@
   }
 
   .backgroundEvents{
-    background: rgb(93,16,115);
-background: linear-gradient(0deg, rgba(93,16,115,1) 0%, rgba(0,0,0,1) 50%, rgba(82,186,34,1) 100%);
+    background: rgba(37, 37, 37, 0.849);
   }
   
