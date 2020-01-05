@@ -3,9 +3,7 @@ import { Form, Input, Button } from 'antd'
 import { MyContext } from '../../context'
 import MY_SERVICE from '../../services/index';
 import Swal from 'sweetalert2'
-// import ProjectsService from "../../services/ProjectsService";
 
-// const projectsService = new ProjectsService();
 
 export default class EditUser extends Component {
   state = {
@@ -31,7 +29,7 @@ export default class EditUser extends Component {
     });
   };
 
-  editEvent = async e => {
+  editUser = async e => {
     e.preventDefault();
     const { formUser } = this.state;
     const formData = new FormData()
@@ -64,7 +62,7 @@ export default class EditUser extends Component {
         <Form
             className="container"
             onSubmit={e => {
-              this.editEvent(e)
+              this.editUser(e)
               this.props.history.push(`/profile`)
             }}
             >
@@ -85,7 +83,6 @@ export default class EditUser extends Component {
               name="image"
               type="file"
               placeholder="Image"
-              // value={this.state.formEvent.image}
               onChange={this.handleFile}/>
           </Form.Item>
 

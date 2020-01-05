@@ -6,7 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import MyProvider from "./context";
 import "antd/dist/antd.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./styles/App.css";
 
 
 ReactDOM.render( 

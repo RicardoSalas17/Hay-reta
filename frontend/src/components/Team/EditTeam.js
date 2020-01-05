@@ -51,7 +51,7 @@ export default class editTeams extends Component {
           return(
       <div className="backgroundCard">
       <div className="text-center">
-      <h1>Add Team</h1>
+      <h1>Edit Team</h1>
       </div>
         <Form
             className="container"
@@ -92,7 +92,7 @@ export default class editTeams extends Component {
           
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Create
+              Edit
             </Button>
           </Form.Item>
         </Form>

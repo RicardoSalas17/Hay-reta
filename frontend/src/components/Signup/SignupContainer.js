@@ -19,16 +19,7 @@ export default class SignupContainer extends React.Component {
               className=" p-2 p-md-5 "
               onSubmit={e => {
                 context.handleSignup(e);
-                const { user } = context
-                if (user) {
-                  this.props.history.push(`/profile`);
-                } else{
-                  return (
-                    <div className="App">
-                    <Skeleton avatar paragraph={{ rows: 4 }} />
-                    </div>
-                  )
-                }
+                this.props.history.push(`/profile`);
               }}
             >
               <Form.Item>

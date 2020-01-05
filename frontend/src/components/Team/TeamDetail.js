@@ -97,7 +97,7 @@ class TeamDetail extends Component {
                 context.deleteTeam(`/team/${team._id}`);
                 return <Redirect exact to="/profile"/>
               }}
-              className="event-button"  >
+              className="event-buttondelete"  >
                 Delete Team
               </Button>
                   </div>

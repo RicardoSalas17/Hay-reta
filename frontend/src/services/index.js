@@ -43,16 +43,18 @@ const MY_SERVICE = {
   deletUser: async (data) => {
     return await service.delete(data)
   },
-
+  deletMatch: async (data) => {
+    return await service.delete(data)
+  },
   deleteTeam: async (data) => {
     return await service.delete(data)
   },
+
   updateTeam: async (data, form) => {
     return await service.patch(data, form);
   },
 
   addTeam: user => {
-
     return service.post('/teams', user);
   },
   getTeams: async () => {
@@ -80,9 +82,7 @@ const MY_SERVICE = {
   createComment: async (data, form) => {
     return await service.post(data, form);
   }
-  // Events: async () => {
-  //   return await service.get('/events');
-  // },
+
 }
 
 export default MY_SERVICE;

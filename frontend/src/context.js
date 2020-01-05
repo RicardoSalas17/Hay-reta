@@ -56,14 +56,6 @@ class MyProvider extends Component {
       .catch(err => console.log(err))
   }
 
-  // if(this.state.loggedUser){
-  //   MY_SERVICE.getUsers()
-  //   .then(({ data }) => {
-  //     this.setState({users: data })
-  //   })
-  //   .catch(err => console.log(err))
-  
-  // }
 
 }
 
@@ -107,7 +99,6 @@ handleChange= (e,a, c) =>{
     e.preventDefault();
     const { formSignup } = this.state;
     const formData = new FormData()
-
     for(let key in formSignup){
       formData.append(key, this.state.formSignup[key])
     }
@@ -129,6 +120,8 @@ handleChange= (e,a, c) =>{
 
   handleLogin = (e, cb) => {
     e.preventDefault()
+
+
     MY_SERVICE.login(this.state.loginForm)
       .then(({ data }) => {
         this.setState({ loggedUser: true, user: data.user })
@@ -157,9 +150,11 @@ handleChange= (e,a, c) =>{
 
   deleteTeam= async (a) => {
     await MY_SERVICE.deleteTeam(a)
-
   }
 
+  deletMatch = async (a) => {
+    await MY_SERVICE.deletMatch(a)
+  }
 
   updateTeam= async (e,a) => {
     e.preventDefault()
@@ -174,7 +169,7 @@ handleChange= (e,a, c) =>{
     const team = await MY_SERVICE.updateTeam(a,formDatas)
 
 
-    Swal.fire(`Team ${team} `, 'Team created', 'success')
+    Swal.fire(`Team ${team.data.name} `, 'Team updated', 'success')
     this.setState({ 
       teamForm: {
             name: '',
@@ -226,6 +221,7 @@ handleChange= (e,a, c) =>{
           handleFile:this.handleFile,
           handleUser:this.handleUser,
           deletUser:this.deletUser,
+          deletMatch:this.deletMatch,
           deleteTeam:this.deleteTeam,
           handleUsers:this.handleUsers,
           handleupdateEvent:this.handleupdateEvent,
@@ -246,11 +242,4 @@ handleChange= (e,a, c) =>{
 export default MyProvider
 
 
-  // handleEvents =  () => {
-  //   MY_SERVICE.getEvents().then(({ data }) => { 
-  //     this.setState({  events:data.events })
-
-  //   })
-  //   .catch(err => console.log(err))
-  // }
 

@@ -17,8 +17,8 @@ export default class AddTeam extends Component {
   state={
     users:[]
   }
-
-    async componentDidMount()  {
+componentDidMount
+    async componentWillMount() {
     const { data } = await MY_SERVICE.getUsers()
     this.setState({ users: [...data.users] })
     for (let i = 0; i < this.state.users.length; i++) {

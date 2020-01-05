@@ -4,64 +4,76 @@ const Team = require("../models/Team");
 
 exports.getTeams = async (req, res) => {
   const team = await Team.find().populate("owner")
-   .populate({
-    path:"players"})
-  res.status(200).json({ team });
+    .populate({
+      path: "players"
+    })
+  res.status(200).json({
+    team
+  });
 };
 
 exports.getTeam = async (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   const team = await Team.findById(id).populate("owner")
-  .populate({
-  path:"matchs",
-  })
-  .populate({
-    path:"players",
-    }) .populate({
-      path:"owner",
-      })
+    .populate({
+      path: "matchs",
+    })
+    .populate({
+      path: "players",
+    }).populate({
+      path: "owner",
+    })
   res.status(200).json(team);
 };
 
 exports.createTeam = async (req, res) => {
-  const { name,
+  const {
+    name,
     players
-          } = req.body
-  const { user } = req;
+  } = req.body
+  const {
+    user
+  } = req;
   let createTeam;
 
- const plays = (players.split(','))
+  const plays = (players.split(','))
 
 
 
   if (req.file) {
-    createTeam =  {
+    createTeam = {
       name,
-    players:plays,
-    owner: user._id,
-    image: req.file.secure_url
-    
+      players: plays,
+      owner: user._id,
+      image: req.file.secure_url
+
+    }
+
+
+  } else {
+    createTeam = {
+      name,
+      players: plays,
+      owner: user._id
+    }
+
   }
+  const teamCreated = await Team.create(createTeam);
 
-    
-  }else {
-    createTeam ={
-      name,
-    players:plays,
-    owner: user._id
-    } 
-    
-    }
-    const teamCreated = await Team.create(createTeam);
-
-    for(i=0; i<plays.length; i++){
-      const userUpdated = await User.findByIdAndUpdate(
-        plays[i],
-        { $push: { teams:teamCreated._id } },
-        { new: true }
-      );
-      req.user = userUpdated;
-    }
+  for (i = 0; i < plays.length; i++) {
+    const userUpdated = await User.findByIdAndUpdate(
+      plays[i], {
+        $push: {
+          teams: teamCreated._id
+        }
+      }, {
+        new: true
+      }
+    );
+    req.user = userUpdated;
+  }
 
 
   res.status(201).json(teamCreated);
@@ -79,44 +91,42 @@ exports.createTeam = async (req, res) => {
 
 
 exports.updateTeam = async (req, res) => {
-  const {name,
+  const {
+    name,
     players,
-          } = req.body
-          const { id } = req.params
-          const plays = (players.split(','))
-          let teamUpdate
+  } = req.body
+  const {
+    id
+  } = req.params
+  const plays = (players.split(','))
+  let teamUpdate
 
   if (req.file) {
-     teamUpdate = await Team.findByIdAndUpdate(id,{
-      $set:
-    {  name,
-      players:plays,
-    image: req.file.secure_url}
-      
-    })}
-  else {
-     teamUpdate = await Team.findByIdAndUpdate(id,{
-    $set:
-   {
-    name,
-    players:plays,
-    } 
-  })
-}
+    teamUpdate = await Team.findByIdAndUpdate(id, {
+      $set: {
+        name,
+        players: plays,
+        image: req.file.secure_url
+      }
+
+    })
+  } else {
+    teamUpdate = await Team.findByIdAndUpdate(id, {
+      $set: {
+        name,
+        players: plays,
+      }
+    })
+  }
 
 
-Team.findOneAndUpdate(id, teamUpdate) 
+  Team.findOneAndUpdate(id, teamUpdate)
 
   res.status(201).json(teamUpdate);
 };
 
 
 
-exports.deleteTeam =async (req, res) => {
-  const { id } = req.params
-  const user = await Team.findByIdAndDelete(id)
-  res.status(200).json(user);
-};
 
 
 
@@ -129,7 +139,11 @@ exports.deleteTeam =async (req, res) => {
 
 
 exports.deleteTeam = async (req, res) => {
-  const { id } = req.params;
+  const {
+    id
+  } = req.params;
   await Team.findByIdAndDelete(id);
-  res.status(200).json({ message: "team deleted" });
+  res.status(200).json({
+    message: "team deleted"
+  });
 };

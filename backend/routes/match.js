@@ -9,7 +9,7 @@ const {
 } = require("../controllers/match.controller");
 
 
-// Projects
+
 router.get("/matchs", getMatchs);
 router.get("/matchs/:id", getMatch);
 router.post("/matchs", upload.single("image"), createMatch);

@@ -51,12 +51,7 @@ export default class AddMatch extends Component {
       }
     });
   };
-  // handleChange= (e,a, c) =>{
-  //   const s = this.state[a]
-  //   const key = c
-  //   s[key] = e
-  //   this.setState({ obj: {s}})
-  // }
+
 
   addMatch = async e => {
     e.preventDefault();

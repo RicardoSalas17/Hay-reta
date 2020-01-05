@@ -48,7 +48,6 @@ export default class LoginContainer extends React.Component {
                     onChange={e => context.handleInput(e, "loginForm")}
                   />
                 </Form.Item>
-
                 <Form.Item className="text-center">
                   <Button type="primary" htmlType="submit">
                     Login

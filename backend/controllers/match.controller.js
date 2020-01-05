@@ -4,13 +4,13 @@ const User = require("../models/User");
 exports.getMatchs = async (req, res) => {
   const match = await Match.find().populate("owner")
    .populate({
-    path:"Team"})
+    path:"Team"}).populate("players")
   res.status(200).json({ match });
 };
 
 exports.getMatch = async (req, res) => {
   const { id } = req.params;
-  const match = await Match.findById(id).populate("owner")
+  const match = await Match.findById(id).populate("owner").populate("players").populate("teams")
   .populate({
   path:"comments",
   populate:{ 

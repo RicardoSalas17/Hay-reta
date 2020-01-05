@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import MY_SERVICE from '../../services/index';
 import { Skeleton } from 'antd'
+import { Link} from 'react-router-dom'
 
 
 
@@ -16,7 +17,13 @@ class Matchcard extends Component {
     this.setState({ matches: [...data.match] })
 
   }
+  async componentWillReceiveProps(){
 
+    const { data } = await MY_SERVICE.getMatches()
+
+    this.setState({ matches: [...data.match] })
+
+  }
   render() {
     const { matches } = this.state
 
@@ -56,11 +63,13 @@ class Matchcard extends Component {
        <img src={`${image}`} className="eventImage"alt={`${matchName}`} />
        </div>
        <div className="w-75 ">
-       <h2 className="text-center p-2">{matchName}</h2>
+       <div className="text-center mt-2">
+       <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
+     </div>
+       <div className="text-center" id="content">
        <p>Fecha:{dateTime}</p>
-       <p>Hora:{localTime}</p>
-       <p>Descripción:{description}</p>
-       <div className="text-center">
+     <p>Direction:{direction}</p>
+     <p>Hora:{localTime}</p>
        </div>
        </div>
        </div>

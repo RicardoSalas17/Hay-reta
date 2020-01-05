@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Link} from 'react-router-dom'
 
 function Home() {
   return (
@@ -7,9 +7,11 @@ function Home() {
       <div className="mu-div-home">
         <div className="text-center my-auto">
           <h1 className="">Time to show who you are</h1>
-          <Button type="primary" className="mt-2">
+
+         
+          <Link exact to="/signup"  type="primary" className="sing-button ">
             Signin
-          </Button>
+          </Link>
         </div>
       </div>
       <div className="container-fluid">

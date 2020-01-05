@@ -7,13 +7,15 @@ export default function ProfileContainer() {
 
   return (
     <MyContext.Consumer>
-
       {context =>
         {
           if (!context.loggedUser) {
-           return <Redirect to="/login" />
+           return(<div className="App">
+           <Skeleton avatar paragraph={{ rows: 4 }} />
+           </div>)
+           
+           
           }
-          
           else if(!context.user.teams ){
           context.handleUser()
           return (<div className="App">
@@ -34,7 +36,6 @@ export default function ProfileContainer() {
           </div>
           <div className="col-12 col-md-7">
             <h2 className="text-center mt-2 mt-md-5">
-
               <b> {context.user.name} {}</b>{" "}
             </h2>
             <h3 className="pt-4">{context.user.email} </h3>
@@ -43,25 +44,20 @@ export default function ProfileContainer() {
                 Edit profile
               </Link>
             </div>
-
             <div className="text-center mt-2 mt-md-5">
               <Button 
               onClick={e => {
                 context.deletUser(`/profile/${context.user._id}`);
                 return <Redirect to="/login" />
               }}
-              className="event-button" exact to={`/profile/${context.user._id}`} >
+              className="event-buttondelete" exact to={`/profile/${context.user._id}`} >
                 Delete Profile
               </Button>
             </div>
             </div>
             </div>
-
-
             <div>
-
             <Row>
-
             <Col span={12} className="text-center p-3 p-md-5">
             <h2 className="titulo-mis-eventos">MY TEAMS</h2>
           {
@@ -81,7 +77,6 @@ export default function ProfileContainer() {
             </div>
             <div className="col-12 col-md-6 text-white">
               <h2 className="text-center">
-                
               <div className="text-center mt-2">
               <Link className="event-button" exact to={`/team/${_id}`} type="button" >{name}</Link>
             </div>
@@ -90,7 +85,6 @@ export default function ProfileContainer() {
                 <p>
                   <b>Players:</b>
                 </p>
-                
                 {players ? players.map((
                   { 
                  _id,
@@ -114,8 +108,6 @@ export default function ProfileContainer() {
             </div>
             </div>
             ))}
-
-            
           </Col>
           <Col  span={12} className="text-center p-3 p-md-5">
           <h2 className="titulo-mis-eventos">MY MATCHES</h2>
@@ -124,12 +116,7 @@ export default function ProfileContainer() {
                 matchName, 
              image,
              _id,
-             players,
-             matchType,
-             teams,
-             dateTime,
-             localTime,
-             description,
+             players
             } ) => (
             <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
               <div className="col-12 col-md-4">
@@ -137,12 +124,10 @@ export default function ProfileContainer() {
                   src={`${image}`}
                   alt={`${matchName}`}
                   className="evento-privado-img py-auto"
-                />
-               
+                /> 
               </div>
               <div className="col-12 col-md-6 text-white">
                 <h2 className="text-center">
-                  
                 <div className="text-center mt-2">
                 <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
               </div>
@@ -151,7 +136,6 @@ export default function ProfileContainer() {
                   <p>
                     <b>Players:</b>
                   </p>
-                  
                   {players ? players.map((
                     { 
                    _id,
@@ -176,17 +160,6 @@ export default function ProfileContainer() {
               </div>
               ))}
               </Col>
-
-
-
-            
-
-
-
-
-
-
-
               </Row>
         </div>
       </div>
