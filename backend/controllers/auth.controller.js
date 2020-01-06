@@ -17,6 +17,7 @@ exports.createUser = async (req, res) => {
      let createUser
 
 
+
   if (req.file) {
     createUser ={
     name,
@@ -31,10 +32,16 @@ exports.createUser = async (req, res) => {
         email
          }
         }
+         const user = await User.register(createUser, req.body.password) 
 
-    const user = await User.register(createUser, req.body.password)
-
+        //  { user: req.user } 
+        //  req.user = usercreated
+    // req.user = user
+    // console.log(req.user)
+    // console.log(user)
+       
   return res.status(201).json(user)
+ 
 }
 
 
@@ -71,7 +78,7 @@ exports.login = (req, res, next) => {
 }
 
 exports.getUser = async (req, res, next) => {
-
+  // console.log(req.user._id)
   const user = await User.findById(req.user._id).populate({
     path:"teams",
     populate:{ 
@@ -110,7 +117,19 @@ exports.getotherUser =async (req, res) => {
       path: "players",
       model:"User",
       }
-      })
+      }).populate({
+        path:"matchs",
+        populate:{ 
+        path: "players",
+        model:"User",
+        }
+        }).populate({
+          path:"matchs",
+          populate:{ 
+          path: "teams",
+          model:"Team",
+          }
+          })
     res.status(200).json(user);
   };
 

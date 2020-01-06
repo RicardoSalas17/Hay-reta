@@ -1,5 +1,6 @@
 const Match = require("../models/Match");
 const User = require("../models/User");
+const Team = require("../models/Team");
 
 exports.getMatchs = async (req, res) => {
   const match = await Match.find().populate("owner")
@@ -31,8 +32,9 @@ exports.createMatch = async (req, res) => {
     direction,
     matchType,
     players,
-    Teams
+    teams
           } = req.body
+
 
 let p
 if(players.includes(",")){
@@ -44,10 +46,10 @@ if(players.includes(",")){
 
 
 let t
-if(Teams.includes(",")){
-  t=(Teams.split(','))
+if(teams.includes(",")){
+  t=(teams.split(','))
 }else{
-  t=Teams
+  t=teams
 }
 
 
@@ -89,36 +91,50 @@ if(Teams.includes(",")){
     
     }
     const matchCreated = await Match.create(createMatch);
-  const userUpdated = await User.findByIdAndUpdate(
-    user._id,
-    { $push: { matchs:matchCreated._id } },
-    { new: true }
-  );
-  req.user = userUpdated;
 
 
-if(p.length){
+
+if(players.includes(",")){
   for(i=0; i<p.length; i++){
-  await User.findByIdAndUpdate(
+    const userUpdated = await User.findByIdAndUpdate(
       p[i],
       { $push: { matchs:matchCreated._id } },
       { new: true }
     );
+    let actus = await User.findById(p[i]) 
+    actus = userUpdated
   }
 } else{
-  await User.findByIdAndUpdate(
+  const userUpdated = await User.findByIdAndUpdate(
     players,
     { $push: { matchs:matchCreated._id } },
     { new: true }
   );
+  let actus = await User.findById(players) 
+  actus = userUpdated
 }
 
 
+if(teams.includes(",")){
+  for(i=0; i<t.length; i++){
+    const teamUpdated =await Team.findByIdAndUpdate(
+      t[i],
+      { $push: { matchs:matchCreated._id } },
+      { new: true }
+    );
+    let acttea = await Team.findById(t[i]) 
+    acttea = teamUpdated
+  }
+} else{
+  const teamUpdated =await Team.findByIdAndUpdate(
+    teams,
+    { $push: { matchs:matchCreated._id } },
+    { new: true }
+  );
+  let acttea = await Team.findById(Teams)
+  acttea = teamUpdated
 
-
-
-
-
+}
 
   res.status(201).json(matchCreated);
 };

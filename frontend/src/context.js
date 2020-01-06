@@ -45,24 +45,22 @@ class MyProvider extends Component {
         this.setState({users: data })
       })
       .catch(err => console.log(err))
-    
     }
-  }componentWillUpdate(){
-  if (!document.cookie) {
-    MY_SERVICE.getUser()
-      .then(({ data }) => {
-        this.setState({ loggedUser: true, user: data.user })
-      })
-      .catch(err => console.log(err))
   }
 
-
+  componentDidUpdate(){
+    if(this.state.loggedUser === true){
+    MY_SERVICE.getUser()
+    .then(({ data }) => {
+      this.setState({  user: data.user })
+    })
+    .catch(err => console.log(err))}
 }
 
 handleUser =()=>{
   MY_SERVICE.getUser()
   .then(({ data }) => {
-    this.setState({ loggedUser: true, user: data.user })
+    this.setState({ user: data.user })
   })
   .catch(err => console.log(err))
 }
@@ -104,7 +102,11 @@ handleChange= (e,a, c) =>{
     }
     formData.append('image', this.state.file)
     const user = await MY_SERVICE.signup(formData)
-    Swal.fire(`Bienvenido ${user.data.name}`, 'Gracias por registrate', 'success')
+    const userLog = await MY_SERVICE.login({
+      email: this.state.formSignup.email,
+      password: this.state.formSignup.password
+    })
+    Swal.fire(`Bienvenido ${user.data.name}`, 'Gracias por registrate' , 'success')
     this.setState({ loggedUser: true, user: user.data })
     this.setState({ 
       formSignup: {
@@ -120,8 +122,6 @@ handleChange= (e,a, c) =>{
 
   handleLogin = (e, cb) => {
     e.preventDefault()
-
-
     MY_SERVICE.login(this.state.loginForm)
       .then(({ data }) => {
         this.setState({ loggedUser: true, user: data.user })
@@ -169,7 +169,7 @@ handleChange= (e,a, c) =>{
     const team = await MY_SERVICE.updateTeam(a,formDatas)
 
 
-    Swal.fire(`Team ${team.data.name} `, 'Team updated', 'success')
+    Swal.fire( 'Team updated', 'success')
     this.setState({ 
       teamForm: {
             name: '',
@@ -192,7 +192,7 @@ handleChange= (e,a, c) =>{
     const team = await MY_SERVICE.addTeam(formDatas)
 
 
-    Swal.fire(`Team ${team.data.name} `, 'Team created', 'success')
+    Swal.fire( 'Team created', 'success')
     this.setState({ 
       teamForm: {
             name: '',

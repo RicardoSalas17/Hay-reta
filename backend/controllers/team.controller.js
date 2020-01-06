@@ -19,6 +19,14 @@ exports.getTeam = async (req, res) => {
   const team = await Team.findById(id).populate("owner")
     .populate({
       path: "matchs",
+      populate:{
+        path:"players"
+      }
+    }).populate({
+      path: "matchs",
+      populate:{
+        path:"teams"
+      }
     })
     .populate({
       path: "players",
@@ -33,9 +41,7 @@ exports.createTeam = async (req, res) => {
     name,
     players
   } = req.body
-  const {
-    user
-  } = req;
+  const {user} = req;
   let createTeam;
 
   const plays = (players.split(','))

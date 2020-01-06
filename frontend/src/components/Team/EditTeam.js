@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MY_SERVICE from '../../services/index';
 import { Form, Input, Button, Select } from 'antd'
-import { Link, Redirect} from 'react-router-dom'
+import {Redirect} from 'react-router-dom'
 import { MyContext } from '../../context'
 import { Skeleton } from 'antd'
 

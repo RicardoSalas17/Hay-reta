@@ -24,9 +24,13 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.FRONTENDPOINT]
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'https://epic-mcnulty-8b77ea.netlify.com'
+    ]
   })
-);
+)
 
 app.use(
   session({

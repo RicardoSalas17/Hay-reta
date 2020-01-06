@@ -7,8 +7,6 @@ function Home() {
       <div className="mu-div-home">
         <div className="text-center my-auto">
           <h1 className="">Time to show who you are</h1>
-
-         
           <Link exact to="/signup"  type="primary" className="sing-button ">
             Signin
           </Link>
@@ -18,8 +16,6 @@ function Home() {
         <div className="row mu-div-row2">
           <div className="col-12 col-md-7 text-white text-center my-auto">
             <h3 className="text-white">It’s not whether you get knocked down,</h3>
-
-             
             <br />
             <h3 className="text-white">it’s whether you get up</h3>
             <p>Vince Lombardi</p>

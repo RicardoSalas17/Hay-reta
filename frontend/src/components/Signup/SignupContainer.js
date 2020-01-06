@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Icon, Button, Skeleton } from "antd";
+import { Form, Input, Icon, Button} from "antd";
 import { MyContext } from "../../context";
 
 export default class SignupContainer extends React.Component {

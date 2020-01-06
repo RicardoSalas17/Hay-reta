@@ -11,8 +11,8 @@ mapboxgl.accessToken =
 
 const { Option } = Select;
 
-const children = [];
-const childrens = [];
+let children = [];
+let childrens = [];
 
 export default class AddMatch extends Component {
   state = {
@@ -66,7 +66,7 @@ export default class AddMatch extends Component {
 
     
     const match = await MY_SERVICE.createMatch(formData)
-    Swal.fire( `Match ${match.name} created`, 'success')
+    Swal.fire( `Match created`, 'success')
     this.setState({ 
       matchForm: {
         matchName: '',
@@ -79,6 +79,8 @@ export default class AddMatch extends Component {
         direction:''
       }
     })
+    children = [];
+    childrens = [];
     this.props.history.push('/matchs')
     
   };
@@ -92,7 +94,6 @@ export default class AddMatch extends Component {
       childrens.push(<Option value={this.state.teams[i]._id} key= {i} >{this.state.teams[i].name}</Option>);
       }
       const hola = await MY_SERVICE.getUsers()
-
       this.setState({ users: [...hola.data.users] })
       for (let i = 0; i < this.state.users.length; i++) {
           children.push(<Option value={this.state.users[i]._id} key= {i} >{this.state.users[i].name}</Option>);
@@ -212,7 +213,7 @@ export default class AddMatch extends Component {
           mode="multiple"
           placeholder="Teams"
           style={{ width: '100%' }}
-          onChange={e => this.handleChange(e, "matchForm","Teams" )}
+          onChange={e => this.handleChange(e, "matchForm","teams" )}
         >
         {childrens}
         </Select>

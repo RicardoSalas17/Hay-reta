@@ -63,8 +63,8 @@ class MatchDetail extends Component {
         const { id } = this.props.match.params
         e.preventDefault();
         const { formComment } = this.state;      
-        const comment = await MY_SERVICE.createComment(`/comments/${id}`,formComment)
-        Swal.fire(`Comentario creado`, 'success')
+        await MY_SERVICE.createComment(`/comments/${id}`,formComment)
+        Swal.fire(`Coment created`, 'success')
         this.setState({ 
           formComment:{
             content: '',
@@ -152,7 +152,7 @@ class MatchDetail extends Component {
                 {_id === context.user._id ? 
                   <h3> {name}</h3>
                   :
-                  <Link className="event-button" exact to={`/profiles/${_id}`} type="button" > {name}</Link>
+                  <Link className="event-button" exact to={`/team/${_id}`} type="button" > {name}</Link>
                 }
                 </div>
                 </div>

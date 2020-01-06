@@ -92,6 +92,7 @@ class TeamDetail extends Component {
                 Edit team
               </Link>
 
+              {team.owner._id === context.user._id ? 
               <Button 
               onClick={e => {
                 context.deleteTeam(`/team/${team._id}`);
@@ -99,18 +100,74 @@ class TeamDetail extends Component {
               }}
               className="event-buttondelete"  >
                 Delete Team
-              </Button>
+              </Button>: <div></div>
+            }
+
+
+
                   </div>
                 </div>
                 <div>
                 <div className="text-center p-3 p-md-5">
                   <h2 className="titulo-mis-eventos">MATCHES</h2>
                 </div>
-             
-    
-    
-    
+                <div>
+                {!team.matchs ? 
+                  <div className="App">
+                      <Skeleton avatar paragraph={{ rows: 4 }} />
+                      </div> 
+                  :
+                  team.matchs.map(({ 
+                    matchName, 
+                 image,
+                 _id,
+                 players
+                } ) => (
+                <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
+                  <div className="col-12 col-md-4">
+                    <img
+                      src={`${image}`}
+                      alt={`${matchName}`}
+                      className="evento-privado-img py-auto"
+                    /> 
+                  </div>
+                  <div className="col-12 col-md-6 text-white">
+                    <h2 className="text-center">
+                    <div className="text-center mt-2">
+                    <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
+                  </div>
+                    </h2>
+                    <div className="py-3">
+                      <p>
+                        <b>Players:</b>
+                      </p>
+                      {players ? players.map((
+                        { 
+                       _id,
+                       name
+                      } ) => 
+                      (
+                        <div key={`${_id}`}>
+                        <div>
+                        {_id === context.user._id ? 
+                          <h3> {name}</h3>
+                          :
+                          <Link className="event-button" exact to={`/profiles/${_id}`} type="button" > {name}</Link>
+                        }
+                        </div>
+                        </div>
+                      )) : <div className="App">
+                      <Skeleton avatar paragraph={{ rows: 4 }} />
+                      </div> 
+                    }
+                    </div>
+                  </div>
+                  </div>
+                  ))}
+                  </div>
               </div>
+
+
               </div>
             </div>
           </div>

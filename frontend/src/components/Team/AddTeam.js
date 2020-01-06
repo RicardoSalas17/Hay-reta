@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import MY_SERVICE from '../../services/index';
 import { Form, Input, Button, Select } from 'antd'
-import { Link, Redirect} from 'react-router-dom'
+import { Redirect} from 'react-router-dom'
 import { MyContext } from '../../context'
 import { Skeleton } from 'antd'
 
 const { Option } = Select;
 
-const children = [];
+let children = [];
 
 
 
@@ -17,8 +17,8 @@ export default class AddTeam extends Component {
   state={
     users:[]
   }
-componentDidMount
-    async componentWillMount() {
+
+    async componentDidMount() {
     const { data } = await MY_SERVICE.getUsers()
     this.setState({ users: [...data.users] })
     for (let i = 0; i < this.state.users.length; i++) {
@@ -55,6 +55,7 @@ componentDidMount
             className="container"
             onSubmit={e => {
               context.createTeam(e);
+              children =[]
               this.props.history.push(`/profile`);
               
             }}

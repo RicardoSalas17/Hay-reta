@@ -64,7 +64,7 @@ class Matchcard extends Component {
        </div>
        <div className="w-75 ">
        <div className="text-center mt-2">
-       <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
+      <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
      </div>
        <div className="text-center" id="content">
        <p>Fecha:{dateTime}</p>
