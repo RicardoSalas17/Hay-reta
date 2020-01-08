@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Home from './components/home/Home';
 import NotFound from './components/404/NotFound.js';
-import Navbar from './components/styled-components/Navbar'
+import Navbar from './components/NavBar/Navbar'
 import SignupContainer from './components/Signup/SignupContainer'
 import LoginContainer from './components/Login/LoginContainer'
 import ProfileContainer from './components/Profile/ProfileContainer';
