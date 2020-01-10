@@ -9,39 +9,45 @@ exports.getUsers= async(req,res) => {
  res.status(200).json({ users });
 }
 
-exports.createUser = async (req, res) => {
+exports.createUser =  (req, res) => {
   const { 
-     name,
-    email
-       } = req.body
-     let createUser
-
-
-
-  if (req.file) {
-    createUser ={
     name,
-    email,
-    image: req.file.secure_url
-     }
+   email
+      } = req.body
+    let createUser
+    // const emailuser = req.body.email;
+    const password = req.body.password;
 
+    if (email === "" || password === "") {
+      res.status(400).json({  message: "Indicate username and password"})
+       return
     }
-     else{
-      createUser ={
-        name,
-        email
-         }
-        }
-         const user = await User.register(createUser, req.body.password) 
 
-        //  { user: req.user } 
-        //  req.user = usercreated
-    // req.user = user
-    // console.log(req.user)
-    // console.log(user)
-       
-  return res.status(201).json(user)
- 
+    User.findOne({ email }, "email", (err, user) => {
+      if (user !== null) {
+        res.status(401).json({ message: "The username already exists" });
+        return;
+      }})
+
+    if (req.file) {
+      createUser ={
+      name,
+      email,
+      image: req.file.secure_url
+       }
+  
+      }
+       else{
+        createUser ={
+          name,
+          email
+           }
+          }
+
+          User.register(createUser, req.body.password)
+    .then((user) => res.status(201).json({ user }))
+    .catch((err) => res.status(500).json({ err }));
+
 }
 
 
@@ -78,7 +84,8 @@ exports.login = (req, res, next) => {
 }
 
 exports.getUser = async (req, res, next) => {
-  // console.log(req.user._id)
+
+
   const user = await User.findById(req.user._id).populate({
     path:"teams",
     populate:{ 

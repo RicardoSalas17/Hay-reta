@@ -15,10 +15,12 @@ const {
 
 router.get('/users', getUsers)
 
-router.post('/signup',upload.single("image"),createUser,passport.authenticate('local'),(req, res,next) => {
-  const { user } = req;
-  res.status(200).json({ user });
-});
+router.post('/signup',upload.single("image"),createUser
+// (req, res,next) => {
+//   const { user } = req;
+//   res.status(200).json({ user });
+// }
+);
 
 router.patch('/editprofile/:id',upload.single("image"),editUser);
 

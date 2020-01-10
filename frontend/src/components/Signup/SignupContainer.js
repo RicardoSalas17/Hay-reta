@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Icon, Button} from "antd";
+import { Form, Input, Icon, Button, Row, Col} from "antd";
 import { MyContext } from "../../context";
 
 export default class SignupContainer extends React.Component {
@@ -13,13 +13,16 @@ export default class SignupContainer extends React.Component {
   return (
     <MyContext.Consumer>
       {context => (
-        <div className="signup-div">
-          <div className="d-flex justify-content-center align-items-center h-100">
+        <Row className= "signup" 
+        theme="dark">
+          <Col className="d-flex justify-content-center align-items-center h-100" theme="dark">
             <Form
+            theme="dark" span={12} 
               className=" p-2 p-md-5 "
               onSubmit={e => {
                 context.handleSignup(e);
-                this.props.history.push(`/profile`);
+                console.log("2loquesea")
+                this.props.history.push(`/login`);
               }}
             >
               <Form.Item>
@@ -74,8 +77,8 @@ export default class SignupContainer extends React.Component {
                 </Button>
               </Form.Item>
             </Form>
-          </div>
-        </div>
+          </Col>
+        </Row>
       )}
     </MyContext.Consumer>
   );}

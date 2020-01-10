@@ -4,7 +4,13 @@ const PLM = require('passport-local-mongoose')
 const userSchema = new Schema(
   {
     name: String,
-    email: String,
+    email: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+      unique: true
+    },
     image: {
       type: String,
       default: 'https://www.sackettwaconia.com/wp-content/uploads/default-profile.png'

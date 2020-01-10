@@ -101,23 +101,30 @@ handleChange= (e,a, c) =>{
       formData.append(key, this.state.formSignup[key])
     }
     formData.append('image', this.state.file)
-    const user = await MY_SERVICE.signup(formData)
-    const userLog = await MY_SERVICE.login({
-      email: this.state.formSignup.email,
-      password: this.state.formSignup.password
-    })
-    Swal.fire(`Bienvenido ${user.data.name}`, 'Gracias por registrate' , 'success')
-    this.setState({ loggedUser: true, user: user.data })
-    this.setState({ 
-      formSignup: {
-        name: '',
-        email: '',
-        password: '',
-        image:''
+    MY_SERVICE.signup(formData)
+    .then(({ data }) => {
+      Swal.fire(`Walcome ${data.user.name} `, 'Please make login ' , 'success')
+      this.setState({ 
+        formSignup: {
+          name: '',
+          email: '',
+          password: '',
+          image:''
+        }
+      })})
+      
+    .catch(err => {
+      if (`${err}`.includes(400)){
+        
+        Swal.fire(`You must have an email or password`, '☠️', 'error')
+      }else if(`${err}`.includes(401)){
+        Swal.fire(`This email already exist `, '☠️', 'error')
+      }else {
+        console.log(err)
+        Swal.fire(`Please try again`, '☠️', 'error')
       }
     })
-  };
-
+  }
 
 
   handleLogin = (e, cb) => {
@@ -129,8 +136,18 @@ handleChange= (e,a, c) =>{
         cb()
       })
       .catch(err => {
-        Swal.fire(`Quien sabe que paso`, '☠️', 'error')
+
+        if (`${err}`.includes(400)){
+        
+          Swal.fire(`You must have an email or password`, '☠️', 'error')
+        }else if(`${err}`.includes(401)){
+          Swal.fire(`Invalid email or password `, '☠️', 'error')
+        }else {
+
+          Swal.fire(`Please try again later`, '☠️', 'error')
+        }
       })
+      
   }
 
   handleLogout = async cb => {
@@ -166,8 +183,10 @@ handleChange= (e,a, c) =>{
     }
     formDatas.append('image', this.state.file)
 
-    const team = await MY_SERVICE.updateTeam(a,formDatas)
+  await MY_SERVICE.updateTeam(a,formDatas)
 
+
+    
 
     Swal.fire( 'Team updated', 'success')
     this.setState({ 
@@ -189,17 +208,32 @@ handleChange= (e,a, c) =>{
     }
     formDatas.append('image', this.state.file)
 
-    const team = await MY_SERVICE.addTeam(formDatas)
+    await MY_SERVICE.addTeam(formDatas)
+    .then(({ data }) => {
+      console.log(data)
+      Swal.fire(`Team ${data.name} created` ,'success')
+      this.setState({ 
+        teamForm: {
+              name: '',
+               image:'',
+               players:[]
+        }
+      })
+    })
+    .catch(err => {
 
+      if (`${err}`.includes(400)){
+      
+        Swal.fire(`You must write all information`, '☠️', 'error')
+      }else if(`${err}`.includes(401)){
+        Swal.fire(`Invalid team try with other name`, '☠️', 'error')
+      }else {
 
-    Swal.fire( 'Team created', 'success')
-    this.setState({ 
-      teamForm: {
-            name: '',
-             image:'',
-             players:[]
+        Swal.fire(`Please try again later`, '☠️', 'error')
       }
     })
+
+   
   };
 
   render() {

@@ -2,7 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { MyContext } from '../../context'
 import { withRouter } from 'react-router-dom'
-import { Avatar, Menu } from "antd";
+import { Avatar, Menu, Row, Col } from "antd";
+
+
 
 
 function Navbar(props) {
@@ -11,29 +13,36 @@ function Navbar(props) {
     <MyContext.Consumer>
       {context => {
         return (
-
-          <Menu className="navBar">
+          <Menu className="navBar" mode="inline"
+          theme="dark">
          
+          <Row>
+          
+          <Col span={3} className="text-center p-3 p-md-5">
             <NavLink exact to="/" activeClassName="navbar-active">
               Home
             </NavLink>
-            
+            </Col>
+
             {!context.loggedUser && (
-             
+              <Col span={3} className="text-center p-3 p-md-5">
             <NavLink exact to="/signup" activeClassName="navbar-active">
               Signup
             </NavLink>
-           
-
+            </Col>
             )}
-            
+
             {!context.loggedUser && (
+              <Col span={3} className="text-center p-3 p-md-5">
               <NavLink exact to="/login" activeClassName="navbar-active">
                 Login
               </NavLink>
+              </Col>
             )}
-            
+
+
             {context.loggedUser && (
+              <Col span={3} className="text-center p-3 p-md-5">
             
                 <NavLink
                 exact to="/profile" activeClassName="navbar-active"
@@ -42,13 +51,11 @@ function Navbar(props) {
                 />
                   Profile
                 </NavLink>
-
-               
-           
+                </Col>
             )}
 
-            {context.loggedUser && (
-            
+            {context.loggedUser && (            
+              <Col span={3} className="text-center p-3 p-md-5">
               <NavLink
               exact to={`/addteam`}
               activeClassName="navbar-active"
@@ -56,14 +63,19 @@ function Navbar(props) {
               Add Team
               </NavLink>
 
+              </Col>
           )}
+
+              <Col span={3} className="text-center p-3 p-md-5">
                 <NavLink
                 exact to="/matchs" activeClassName="navbar-active"
                 >
                  Matches
                 </NavLink>
+</Col>
 
-            {context.loggedUser && (
+{context.loggedUser && (
+  <Col span={3} className="text-center p-3 p-md-5">
             
               <NavLink
               exact to="/addmatchs" activeClassName="navbar-active"
@@ -71,9 +83,11 @@ function Navbar(props) {
               Add  Match
               </NavLink>
          
+              </Col>
           )}
-            
-            {context.loggedUser && (
+
+          {context.loggedUser && (
+            <Col span={3} className="text-center p-3 p-md-5">
               <button
                 onClick={() =>
                   context.handleLogout(() => {
@@ -83,7 +97,11 @@ function Navbar(props) {
               >
                 Logout
               </button>
+              </Col>
             )}
+
+            </Row>
+
           </Menu>
         )
       }}

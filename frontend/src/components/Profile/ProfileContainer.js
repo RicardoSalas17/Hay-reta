@@ -3,9 +3,6 @@ import { MyContext } from "../../context";
 import { Link, Redirect} from 'react-router-dom'
 import { Skeleton, Button, Row, Col} from 'antd'
 export default function ProfileContainer() {
-
-
-
   return (
     <MyContext.Consumer>
       {context =>
