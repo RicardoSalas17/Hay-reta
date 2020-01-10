@@ -85,7 +85,9 @@ exports.login = (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
 
-
+if(!req.user._id){
+  console.log("loading")
+}else {
   const user = await User.findById(req.user._id).populate({
     path:"teams",
     populate:{ 
@@ -105,7 +107,7 @@ exports.getUser = async (req, res, next) => {
         model:"Team",
         }
         })
-  res.status(200).json({ user })
+  res.status(200).json({ user })}
 }
 
 exports.logout = (req, res, next) => {

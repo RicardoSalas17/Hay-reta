@@ -183,11 +183,8 @@ handleChange= (e,a, c) =>{
     }
     formDatas.append('image', this.state.file)
 
-  await MY_SERVICE.updateTeam(a,formDatas)
-
-
-    
-
+  MY_SERVICE.updateTeam(a,formDatas)
+  .then(({ data }) => {
     Swal.fire( 'Team updated', 'success')
     this.setState({ 
       teamForm: {
@@ -196,6 +193,18 @@ handleChange= (e,a, c) =>{
              players:[]
       }
     })
+  })
+  .catch(err => {
+    if (`${err}`.includes(400)){
+      Swal.fire(`You must write all information`, '☠️', 'error')
+    }else if(`${err}`.includes(401)){
+      Swal.fire(`Invalid team try with other name`, '☠️', 'error')
+    }else {
+      Swal.fire(`Please try again later`, '☠️', 'error')
+    }
+  })
+
+    
   }
   
   createTeam = async e=> {
@@ -210,7 +219,6 @@ handleChange= (e,a, c) =>{
 
     await MY_SERVICE.addTeam(formDatas)
     .then(({ data }) => {
-      console.log(data)
       Swal.fire(`Team ${data.name} created` ,'success')
       this.setState({ 
         teamForm: {
@@ -221,14 +229,11 @@ handleChange= (e,a, c) =>{
       })
     })
     .catch(err => {
-
       if (`${err}`.includes(400)){
-      
         Swal.fire(`You must write all information`, '☠️', 'error')
       }else if(`${err}`.includes(401)){
         Swal.fire(`Invalid team try with other name`, '☠️', 'error')
       }else {
-
         Swal.fire(`Please try again later`, '☠️', 'error')
       }
     })

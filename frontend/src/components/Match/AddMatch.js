@@ -65,8 +65,10 @@ export default class AddMatch extends Component {
     formData.append('image', this.state.file)
 
     
-    const match = await MY_SERVICE.createMatch(formData)
-    Swal.fire( `Match created`, 'success')
+     MY_SERVICE.createMatch(formData)
+
+     .then(({ data }) => {
+      Swal.fire( `Match created`, 'success')
     this.setState({ 
       matchForm: {
         matchName: '',
@@ -82,6 +84,17 @@ export default class AddMatch extends Component {
     children = [];
     childrens = [];
     this.props.history.push('/matchs')
+    })
+    .catch(err => {
+      if (`${err}`.includes(400)){
+        Swal.fire(`You must write all information`, '☠️', 'error')
+      }else if(`${err}`.includes(401)){
+        Swal.fire(`Invalid match try with other name`, '☠️', 'error')
+      }else {
+        Swal.fire(`Please try again later`, '☠️', 'error')
+      }
+    })
+   
     
   };
 
