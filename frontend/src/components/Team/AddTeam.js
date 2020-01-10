@@ -81,7 +81,7 @@ export default class AddTeam extends Component {
           <Form.Item>
           <Select
           mode="multiple"
-          placeholder="players"
+          placeholder="Who organizes?"
           style={{ width: '100%' }}
           onChange={e => context.handleChange(e, "teamForm","players" )}
         >
