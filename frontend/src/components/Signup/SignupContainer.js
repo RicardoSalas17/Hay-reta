@@ -1,6 +1,8 @@
 import React from "react";
-import { Form, Input, Icon, Button, Row, Col} from "antd";
+import { Form, Input, Icon, Button, Row, Col, Typography} from "antd";
 import { MyContext } from "../../context";
+
+const { Title } = Typography;
 
 export default class SignupContainer extends React.Component {
   componentWillMount() {
@@ -13,15 +15,20 @@ export default class SignupContainer extends React.Component {
   return (
     <MyContext.Consumer>
       {context => (
-        <Row className= "signup" 
+
+    
+        <Row type="flex" justify="space-around" align="middle" className= "signup fondoNegro" 
         theme="dark">
-          <Col className="d-flex justify-content-center align-items-center h-100" theme="dark">
+
+
+          <Col  theme="dark">
+          <Title type="danger">Sign up</Title>
+ 
             <Form
-            theme="dark" span={12} 
+       span={12} 
               className=" p-2 p-md-5 "
               onSubmit={e => {
                 context.handleSignup(e);
-                console.log("2loquesea")
                 this.props.history.push(`/login`);
               }}
             >
@@ -72,7 +79,7 @@ export default class SignupContainer extends React.Component {
             </Form.Item>
 
               <Form.Item className="text-center">
-                <Button type="primary" htmlType="submit">
+                <Button type="danger" htmlType="submit">
                   Signup
                 </Button>
               </Form.Item>
