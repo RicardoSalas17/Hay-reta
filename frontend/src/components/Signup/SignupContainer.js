@@ -17,16 +17,12 @@ export default class SignupContainer extends React.Component {
       {context => (
 
     
-        <Row type="flex" justify="space-around" align="middle" className= "signup fondoNegro" 
+        <Row type="flex" justify="space-around" align="middle" className= "signup fondoGris" 
         theme="dark">
-
-
           <Col  theme="dark">
           <Title type="danger">Sign up</Title>
- 
             <Form
        span={12} 
-              className=" p-2 p-md-5 "
               onSubmit={e => {
                 context.handleSignup(e);
                 this.props.history.push(`/login`);
@@ -56,7 +52,6 @@ export default class SignupContainer extends React.Component {
                   onChange={e => context.handleInput(e, "formSignup")}
                 />
               </Form.Item>
-
               <Form.Item>
                 <Input
                   name="password"
@@ -69,7 +64,6 @@ export default class SignupContainer extends React.Component {
                   onChange={e => context.handleInput(e, "formSignup")}
                 />
               </Form.Item>
-
               <Form.Item>
               <Input
                 name="image"
@@ -77,8 +71,7 @@ export default class SignupContainer extends React.Component {
                 placeholder="Image"
                 onChange={e => context.handleFile(e, "file")}/>
             </Form.Item>
-
-              <Form.Item className="text-center">
+              <Form.Item>
                 <Button type="danger" htmlType="submit">
                   Signup
                 </Button>

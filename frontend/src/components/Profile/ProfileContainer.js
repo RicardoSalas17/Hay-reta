@@ -7,26 +7,24 @@ export default function ProfileContainer() {
     <MyContext.Consumer>
       {context =>
         <div>
-        <div className="profile-fondo">
-        <div className="container">
-          <div className="row detalle-perfil-div">
-            <div className="col-12 col-md-5">
-              <img
-                src={`${context.user.image}`}
-                alt="Foto de perfil"
-              />
-            </div>
-            <div className="col-12 col-md-7">
-              <h2 className="text-center mt-2 mt-md-5">
-                <b> {context.user.name} {}</b>{" "}
+        <div className="profile-fondo" type="flex" justify="space-around" align="middle">
+
+        <Row className="detalle-perfil-div" type="flex" justify="space-around" align="middle">
+        <Col sm={12} md={12}  lg={10} >
+        <img
+        src={`${context.user.image}`}
+        alt="Foto de perfil"
+      />
+        </Col>
+        <Col sm={12} md={12} lg={14} align="middle" >
+        <h2 >
+        <b> {context.user.name} {}</b>{" "}
               </h2>
-              <h3 className="pt-4">{context.user.email} </h3>
-              <div className="text-center mt-2 mt-md-5">
-                <Link className="event-button" exact to={`/editprofile/${context.user._id}`} >
+              <h3 >{context.user.email} </h3>
+              <Link className="event-button" exact to={`/editprofile/${context.user._id}`} >
                   Edit profile
                 </Link>
-              </div>
-              <div className="text-center mt-2 mt-md-5">
+
                 <Button 
                 onClick={e => {
                   context.deletUser(`/profile/${context.user._id}`);
@@ -35,12 +33,22 @@ export default function ProfileContainer() {
                 className="event-buttondelete" exact to={`/`} >
                   Delete Profile
                 </Button>
-              </div>
-              </div>
-              </div>
+        </Col>
+   
+      </Row>,
+
+
+
+       
+      
+
+
+
+
+
               <div>
-              <Row>
-              <Col span={12} className="text-center p-3 p-md-5">
+              <Row type="flex" justify="space-around" align="top">
+              <Col xs={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }}>
               <h2 className="titulo-mis-eventos">MY TEAMS</h2>
             {!context.user.teams ? 
               <div className="App">
@@ -53,21 +61,21 @@ export default function ProfileContainer() {
              _id,
              players
             } ) => (
-            <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
-              <div className="col-12 col-md-4">
+            <div key={`${_id}`} className=" detalle-evento-privado-div  ">
+              <div >
                 <img
                   src={`${image}`}
                   alt={`${name}`}
-                  className="evento-privado-img py-auto"
+                  className="evento-privado-img "
                 />
               </div>
-              <div className="col-12 col-md-6 text-white">
-                <h2 className="text-center">
-                <div className="text-center mt-2">
+              <div>
+                <h2 >
+                <div >
                 <Link className="event-button" exact to={`/team/${_id}`} type="button" >{name}</Link>
               </div>
                 </h2>
-                <div className="py-3">
+                <div >
                   <p>
                     <b>Players:</b>
                   </p>
@@ -95,7 +103,7 @@ export default function ProfileContainer() {
               </div>
               ))}
             </Col>
-            <Col  span={12} className="text-center p-3 p-md-5">
+            <Col  xs={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }} >
             <h2 className="titulo-mis-eventos">MY MATCHES</h2>
               {!context.user.matchs ? 
                 <div className="App">
@@ -108,21 +116,21 @@ export default function ProfileContainer() {
                _id,
                players
               } ) => (
-              <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
-                <div className="col-12 col-md-4">
+              <div key={`${_id}`} className=" detalle-evento-privado-div ">
+                <div >
                   <img
                     src={`${image}`}
                     alt={`${matchName}`}
-                    className="evento-privado-img py-auto"
+                    className="evento-privado-img "
                   /> 
                 </div>
-                <div className="col-12 col-md-6 text-white">
-                  <h2 className="text-center">
-                  <div className="text-center mt-2">
+                <div >
+                  <h2 >
+                  <div >
                   <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
                 </div>
                   </h2>
-                  <div className="py-3">
+                  <div >
                     <p>
                       <b>Players:</b>
                     </p>
@@ -152,7 +160,7 @@ export default function ProfileContainer() {
                 </Col>
                 </Row>
           </div>
-        </div>
+
       </div>
        </div>
       

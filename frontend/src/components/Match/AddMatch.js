@@ -158,13 +158,13 @@ export default class AddMatch extends Component {
     return (
         <MyContext.Consumer>
         {context => (
-      <div className="backgroundCard">
+      <div className="fondoGris">
 
-      <div className="text-center">
+      <div>
       <h1>Add Match</h1>
       </div>
         <Form
-            className="container"
+            className=""
             onSubmit={e => {
               this.addMatch(e)
               this.props.history.push('/matchs')
@@ -252,7 +252,7 @@ export default class AddMatch extends Component {
           
           
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="danger" htmlType="submit">
               Create
             </Button>
           </Form.Item>

@@ -1,45 +1,48 @@
 import React from "react";
 import { Link} from 'react-router-dom'
+import {Row, Col } from "antd";
 
 function Home() {
   return (
     <div>
       <div className="mu-div-home">
-        <div className="text-center my-auto">
-          <h1 className="">Time to show who you are</h1>
+        <div >
+          <h1 >Time to show who you are</h1>
           <Link exact to="/signup"  type="primary" className="sing-button ">
             Signin
           </Link>
         </div>
       </div>
-      <div className="container-fluid">
-        <div className="row mu-div-row2">
-          <div className="col-12 col-md-7 text-white text-center my-auto">
-            <h3 className="text-white">It’s not whether you get knocked down,</h3>
+      <div >
+        <div className="fondoGris texto-blanco" >
+          <div>
+            <h3 >It’s not whether you get knocked down,</h3>
             <br />
-            <h3 className="text-white">it’s whether you get up</h3>
+            <h3 >it’s whether you get up</h3>
             <p>Vince Lombardi</p>
           </div>
-          <div className="col-12 col-md-5 text-center my-auto py-5">
-            <img src="../images/home2.png" alt="" className="" />
+          <div >
+            <img src="../images/home2.png" alt=""/>
           </div>
         </div>
-        <div className="row mu-div-row1">
-          <div className="col-6 col-md-3 p-0">
-            <img src="../images/home3.jpg" alt="" className="w-100 p-0" />
-          </div>
-          <div className="col-6 col-md-3 p-0">
-
-            <img src="../images/home4.jpg" alt="" className="w-100 p-0" />
-          </div>
-          <div className="col-6 col-md-3 p-0">
-
-            <img src="../images/home5.jpg" alt="" className="w-100 p-0" />
-          </div>
-          <div className="col-6 col-md-3 p-0">
-
-            <img src="../images/home6.jpg" alt="" className="w-100 p-0" />
-          </div>
+        <div >
+        <Row type="flex" >
+  <Col  sm={12} md={6} >
+  <img src="../images/home3.jpg" alt="" className="home-img" />
+  
+  </Col>
+  <Col  sm={12} md={6} >
+  <img src="../images/home4.jpg" alt="" className="home-img" />
+  </Col>
+  <Col  sm={12} md={6} >
+  
+  <img src="../images/home5.jpg" alt="" className="home-img" />
+  </Col>
+  <Col  sm={12} md={6} >
+  <img src="../images/home6.jpg" alt="" className="home-img" />
+  </Col>
+</Row>
+ 
         </div>
       </div>
     </div>

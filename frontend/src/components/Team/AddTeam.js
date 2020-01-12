@@ -3,7 +3,8 @@ import MY_SERVICE from '../../services/index';
 import { Form, Input, Button, Select } from 'antd'
 import { Redirect} from 'react-router-dom'
 import { MyContext } from '../../context'
-import { Skeleton } from 'antd'
+import { Skeleton, Row, Col, Typography } from 'antd'
+const { Title } = Typography;
 
 const { Option } = Select;
 
@@ -47,11 +48,13 @@ export default class AddTeam extends Component {
             return <Redirect to="/login" />
            } else{
           return(
-      <div className="backgroundCard">
-      <div className="text-center">
-      <h1>Add Team</h1>
-      </div>
+      <Row type="flex" justify="space-around" align="middle" className= "signup fondoGris" 
+      theme="dark">
+      <Col  theme="dark">
+          <Title type="danger">Add Team</Title>
+
         <Form
+        span={12} 
             className="container"
             onSubmit={e => {
               context.createTeam(e);
@@ -81,7 +84,7 @@ export default class AddTeam extends Component {
           <Form.Item>
           <Select
           mode="multiple"
-          placeholder="Who organizes?"
+          placeholder="players"
           style={{ width: '100%' }}
           onChange={e => context.handleChange(e, "teamForm","players" )}
         >
@@ -91,12 +94,13 @@ export default class AddTeam extends Component {
           
           
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="danger" htmlType="submit">
               Create
             </Button>
           </Form.Item>
         </Form>
-      </div>
+      </Col>
+      </Row>
     )}}}
     </MyContext.Consumer>
         )}

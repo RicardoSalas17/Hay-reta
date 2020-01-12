@@ -9,8 +9,8 @@ import axios from 'axios';
 // const service = axios.create({ withCredentials: true, baseURL });
 
 
-// const baseURL = 'https://hay-reta.herokuapp.com/'
-const baseURL = 'http://localhost:3000'
+const baseURL = 'https://hay-reta.herokuapp.com/'
+// const baseURL = 'http://localhost:3000'
 
 const service = axios.create({
   baseURL,

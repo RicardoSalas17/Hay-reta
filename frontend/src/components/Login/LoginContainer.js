@@ -1,7 +1,7 @@
 import React from "react";
-import { Form, Input, Icon, Button } from "antd";
+import { Form, Input, Icon, Button, Row, Col, Typography } from "antd";
 import { MyContext } from "../../context";
-
+const { Title } = Typography;
 export default class LoginContainer extends React.Component {
   componentDidUpdate() {
     if (this.context.loggedUser) {
@@ -13,10 +13,12 @@ export default class LoginContainer extends React.Component {
     return (
       <MyContext.Consumer>
         {context => (
-          <div className="login-div">
-            <div className="d-flex justify-content-center align-items-center h-100">
+          <Row type="flex" justify="space-around" align="middle" className= "signup fondoGris" 
+          theme="dark">
+            <Col>
+            <Title type="danger">Log in</Title>
               <Form
-                className=" p-2 p-md-5"
+              span={8} 
                 onSubmit={e => {
                   context.handleLogin(e, () => {
                     this.props.history.push(`/profile`);
@@ -48,14 +50,14 @@ export default class LoginContainer extends React.Component {
                     onChange={e => context.handleInput(e, "loginForm")}
                   />
                 </Form.Item>
-                <Form.Item className="text-center">
-                  <Button type="primary" htmlType="submit">
+                <Form.Item>
+                  <Button type="danger" htmlType="submit">
                     Login
                   </Button>
                 </Form.Item>
               </Form>
-            </div>
-          </div>
+            </Col>
+          </Row>
         )}
       </MyContext.Consumer>
     );

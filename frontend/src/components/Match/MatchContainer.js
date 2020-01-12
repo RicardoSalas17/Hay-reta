@@ -1,5 +1,6 @@
 import React from 'react'
 import { MyContext } from '../../context'
+import {  Row, Col} from "antd";
 import Matchcard from './MatchCards'
 
 export default class matchContainer extends React.Component {
@@ -10,11 +11,12 @@ export default class matchContainer extends React.Component {
     return (
         <MyContext.Consumer>
         {context => (
-          <div className="backgroundEvents">
-          <div className="container">
+          <Row type="flex" justify="space-around" align="middle" className= "match-cont fondoGris" 
+        theme="dark">
+          <Col>
           <Matchcard />
-          </div>
-          </div>
+          </Col>
+          </Row>
       )}
     </MyContext.Consumer>
   )}

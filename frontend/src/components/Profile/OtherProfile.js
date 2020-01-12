@@ -44,25 +44,30 @@ class Profiles extends Component {
         else{
           return(
             <div>
-            <div className="profile-fondo">
-            <div className="container">
-              <div className="row detalle-perfil-div">
-                <div className="col-12 col-md-5">
-                  <img
-                    src={`${user.image}`}
-                    alt="Foto de perfil"
-                  />
-                </div>
-                <div className="col-12 col-md-7">
-                  <h2 className="text-center mt-2 mt-md-5">
+            <div className="profile-fondo" type="flex" justify="space-around" align="middle">
+
+            <Row className="detalle-perfil-div" type="flex" justify="space-around" align="middle">
+            <Col sm={12} md={12}  lg={10} >
+            <img
+            src={`${user.image}`}
+            alt="Foto de perfil"
+          />
+            </Col>
+            <Col sm={12} md={12} lg={14} align="middle" >
+            <h2 className="">
       
                     <b> {user.name} {}</b>{" "}
                   </h2>
-                  <h3 className="pt-4">{user.email} </h3>
-                </div>
-              </div>
+                  <h3 >{user.email} </h3>
+            </Col>
+       
+          </Row>,
+         
+
+
+
               <div>
-                <div className="text-center p-3 p-md-5">
+                <div >
                   <h2 className="titulo-mis-eventos">TEAMS</h2>
                 </div>
 
@@ -70,9 +75,9 @@ class Profiles extends Component {
 
                 <div>
 
-                <Row>
+                <Row type="flex" justify="space-around" align="top">
     
-                <Col span={12} className="text-center p-3 p-md-5">
+                <Col xs={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }}>
                 <h2 className="titulo-mis-eventos">TEAMS</h2>
 
 
@@ -83,20 +88,20 @@ class Profiles extends Component {
                  _id,
                  players
                 } ) => (
-                <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
-                  <div className="col-12 col-md-4">
+                <div key={`${_id}`} className=" detalle-evento-privado-div">
+                  <div >
                     <img
                       src={`${image}`}
                       alt={`${name}`}
-                      className="evento-privado-img py-auto"
+                      className="evento-privado-img"
                     />
                   </div>
-                  <div className="col-12 col-md-6 text-white">
-                    <h2 className="text-center">
+                  <div>
+                    <h2 >
                       
                     <b>Team Name:</b> {name} 
                     </h2>
-                    <div className="py-3">
+                    <div >
                       <p>
                         <b>Players:</b>
                       </p>
@@ -122,7 +127,7 @@ class Profiles extends Component {
                       </div> 
                     }
                     </div>
-                    <div className="text-center mt-2">
+                    <div >
                       <Link className="event-button" exact to={`/team/${_id}`} type="button" >Detail</Link>
                     </div>
                   </div>
@@ -130,7 +135,7 @@ class Profiles extends Component {
                   ))}
                   </Col>
 
-                  <Col  span={12} className="text-center p-3 p-md-5">
+                  <Col  xs={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }} >
                   <h2 className="titulo-mis-eventos">MATCHES</h2>
                     {
                       user.matchs.map(({ 
@@ -144,23 +149,23 @@ class Profiles extends Component {
                      localTime,
                      description,
                     } ) => (
-                    <div key={`${_id}`} className="row detalle-evento-privado-div my-3 ">
-                      <div className="col-12 col-md-4">
+                    <div key={`${_id}`} className=" detalle-evento-privado-div  ">
+                      <div >
                         <img
                           src={`${image}`}
                           alt={`${matchName}`}
-                          className="evento-privado-img py-auto"
+                          className="evento-privado-img"
                         />
                        
                       </div>
-                      <div className="col-12 col-md-6 text-white">
-                        <h2 className="text-center">
+                      <div>
+                        <h2>
                           
-                        <div className="text-center mt-2">
+                        <div >
                         <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
                       </div>
                         </h2>
-                        <div className="py-3">
+                        <div >
                           <p>
                             <b>Players:</b>
                           </p>
@@ -191,8 +196,10 @@ class Profiles extends Component {
                       </Col>
               </Row>
               </div>
+
+
               </div>
-            </div>
+       
           </div>
            </div>
           )}

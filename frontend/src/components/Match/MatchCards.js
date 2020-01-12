@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import MY_SERVICE from '../../services/index';
-import { Skeleton } from 'antd'
+import { Skeleton, Row, Col } from 'antd'
 import { Link} from 'react-router-dom'
 
 
@@ -47,26 +47,25 @@ class Matchcard extends Component {
     }
     else{
       return (
-        <div>
-        <div className="row">
+        <Row>
+        <Col className="row">
           {matches.map(({ 
             matchName,
         dateTime,
         localTime,
-        description,
         direction,
         image,
            _id }
            ) => (
-       <div key={`${_id}`}  className="d-flex flex-row  w-100 eventos-div">
-       <div  className="w-25">
+       <div key={`${_id}`}  className="eventos-div">
+       <div>
        <img src={`${image}`} className="eventImage"alt={`${matchName}`} />
        </div>
-       <div className="w-75 ">
-       <div className="text-center mt-2">
+       <div>
+       <div>
       <Link className="event-button" exact to={`/match/${_id}`} type="button" >{matchName}</Link>
      </div>
-       <div className="text-center" id="content">
+       <div id="content">
        <p>Fecha:{dateTime}</p>
      <p>Direction:{direction}</p>
      <p>Hora:{localTime}</p>
@@ -74,8 +73,8 @@ class Matchcard extends Component {
        </div>
        </div>
             ))}
-           </div>
-        </div>
+           </Col>
+        </Row>
            )
 
     }

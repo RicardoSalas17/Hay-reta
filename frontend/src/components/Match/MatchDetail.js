@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import MY_SERVICE from '../../services/index';
 import { MyContext } from "../../context";
-import { Form, Input, Button, Skeleton } from 'antd'
+import { Form, Input, Button, Skeleton, Col, Row } from 'antd'
 import { Link} from 'react-router-dom'
 import Swal from 'sweetalert2'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
@@ -82,21 +82,21 @@ class MatchDetail extends Component {
       )
     }
     return (
-      <div className="evento-detalle-fondo">
+      <div className="signup match-cont">
  <MyContext.Consumer>
       {context => (
       <div >
-      <div className="container">
-        <div className="row">
-          <div className="row detalle-evento-privado-div my-3 ">
-            <div className="col-12 col-md-4">
-            <img src={`${match.image}`} className="evento-privado-img py-auto" alt={`${match.matchName}`} />
+      <div >
+        <div >
+          <div className="detalle-evento-privado-div ">
+            <div>
+            <img src={`${match.image}`} className="evento-privado-img " alt={`${match.matchName}`} />
             </div>
-            <div className="col-12 col-md-6 text-white">
-              <h2 className="text-center">
+            <div className="text-white">
+              <h2 >
                 {match.matchName} 
               </h2>
-              <div className="py-3">
+              <div >
                 <p>
                   <b>Fecha:</b>{match.dateTime}
                 </p>
@@ -112,8 +112,8 @@ class MatchDetail extends Component {
                 <p>
                   <b>Descripción:</b>{match.description}
                 </p>
-                <div className="map mapcontainer" style={{ width: '400px', height: '300px'}} ref={e => (this.mapContainer = e)}/>
-                <div className="py-3">
+                <div className="map mapcontainer"  ref={e => (this.mapContainer = e)}/>
+                <div>
                 <p>
                   <b>Players:</b>
                 </p>
@@ -137,7 +137,7 @@ class MatchDetail extends Component {
                 </div> 
               }
               </div>
-              <div className="py-3">
+              <div>
               <p>
               <b>Teams:</b>
               </p>
@@ -176,7 +176,7 @@ class MatchDetail extends Component {
           </div>
          
         </div>
-       <div className="text-center p-3 p-md-5">
+       <div>
           <h2 className="titulo-mis-eventos">Comentarios</h2>
         </div>
 {match.comments.map(({ 
@@ -185,21 +185,21 @@ class MatchDetail extends Component {
  _id }  
  ) => ( 
     <div>
-        <div key={`${_id}`} className="row my-4 div-comentario">
-          <div className="col-2">
+        <Row key={`${_id}`} type="flex" justify="left" align="left">
+          <Col sm={4} md={6} lg={8}>
             <img
               src={`${owner.image}`}
               alt="Foto de perfil"
-              className="w-100"
+              className="foto-comentario"
             />
-          </div>
-          <div className="col-10">
+          </Col>
+          <Col sm={4} md={6} lg={8}>
             <p>
               <b>{owner.name}</b>
             </p>
             <p>{content}</p>
-          </div>
-        </div>
+          </Col>
+        </Row>
         </div>
         ))}
       </div>
@@ -207,7 +207,7 @@ class MatchDetail extends Component {
       )}
     </MyContext.Consumer>
     <Form
-    className=" p-2 p-md-5 "
+
     onSubmit={e => {
       this.handleComment(e);
     }}

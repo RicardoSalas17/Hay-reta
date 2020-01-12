@@ -4,7 +4,9 @@
     filter: grayscale(50%);
   }
   
-  
+  .match-cont{
+    height: 100%;
+  }
   
   .signup {
     height: 95vh;
@@ -13,10 +15,15 @@
     /* background-size: 100% 100%; */
     /* filter: grayscale(50%);  */
   }
-  .fondoNegro{
-    background-color: black !important;
+  .fondoGris{
+    background-color: rgb(32, 32, 32) !important;
   }
-  
+  .texto-blanco{
+    color: white;
+  }
+  .foto-comentario{
+    width: 100px;
+  }
   .navBar{
    width: 100vw;
    height: 8vh;
@@ -142,15 +149,22 @@ box-shadow: 10px 10px 13px -6px rgba(38,66,5,1);
 }
 
 .mapboxgl-ctrl-geocoder--input{
-    width: 50vh;
+    width: 30vh;
 }
 
 .ant-row .ant-form-item{
     margin-bottom: 0em;
 }
 
+.mapcontainer{
+  width: 20%;
+   height: 20%;
+   margin: 4% 2% 20% 0;
+
+}
 .mapcontainer .mapboxgl-ctrl-geocoder--input{
 display: none;
+
 }
 .mapboxgl-ctrl-geocoder--icon {
     display: none;
@@ -246,12 +260,12 @@ Link{
 
   
   .detalle-evento-privado-div {
-    background: rgba(37, 37, 37, 0.849);
+    background: rgba(219, 156, 156, 0.849);
     border-radius: 10px;
     -webkit-box-shadow: 10px 10px 11px 0px rgba(180, 176, 207, 1);
     -moz-box-shadow: 10px 10px 11px 0px rgba(180, 176, 207, 1);
     box-shadow: 10px 10px 11px 0px rgba(180, 176, 207, 1);
-    padding: 2% 0;
+    
   }
   
   .evento-privado-img {
@@ -283,7 +297,8 @@ Link{
     color: white;
     font-size: 20px;
     padding-top: 4%;
-  }.mu-div-home {
+  }
+  .mu-div-home {
 
 
     /* background: url("../src/img/home1.jpg"); */
@@ -316,6 +331,11 @@ Link{
   .mu-div-home button:hover {
     background: rgb(38, 199, 65);
     color: blue;
+  }
+
+  .home-img{
+    width: 100%;
+    height: 100%;
   }
   
   .mu-div-row1 img {
@@ -352,7 +372,7 @@ Link{
     
     background: red;
     background-color:rgb(45, 46, 45) ;
-    padding: 10% 0 62vh 0;;
+padding: 1% 0;
   }
   .detalle-perfil-div {
     background: rgba(199, 198, 198, 0.829);
@@ -361,7 +381,8 @@ Link{
     -moz-box-shadow: 10px 10px 11px 0px red;
     box-shadow: 10px 10px 11px 0px red;
     padding: 5% 0;
-    width: 160vh;
+    margin: 5% 0;
+    width: 90%;
   }
   .detalle-perfil-div img {
     border-radius: 50%;
@@ -383,9 +404,10 @@ Link{
     -moz-box-shadow: 10px 10px 11px 0px rgba(180, 176, 207, 1);
     box-shadow: 10px 10px 11px 0px rgba(180, 176, 207, 1);
     padding: 2% 0;
+ 
   }
   .evento-privado-img {
-    width: 100%;
+    width: 90%;
     padding: 5%;
     border-radius: 50px;
   }
@@ -407,7 +429,7 @@ Link{
   }
   h3{
     color: white;
-    padding-left: 10vh;
+    /* padding-left: 10vh; */
 
   }
 

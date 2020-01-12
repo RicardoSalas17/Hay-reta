@@ -4,9 +4,6 @@ import { MyContext } from '../../context'
 import { withRouter } from 'react-router-dom'
 import { Avatar, Menu, Row, Col } from "antd";
 
-
-
-
 function Navbar(props) {
 
   return (
@@ -18,14 +15,14 @@ function Navbar(props) {
          
           <Row>
           
-          <Col span={3} className="text-center p-3 p-md-5">
+          <Col span={3} className="">
             <NavLink exact to="/" activeClassName="navbar-active">
               Home
             </NavLink>
             </Col>
 
             {!context.loggedUser && (
-              <Col span={3} className="text-center p-3 p-md-5">
+              <Col span={3} className="">
             <NavLink exact to="/signup" activeClassName="navbar-active">
               Signup
             </NavLink>
@@ -33,7 +30,7 @@ function Navbar(props) {
             )}
 
             {!context.loggedUser && (
-              <Col span={3} className="text-center p-3 p-md-5">
+              <Col span={3} className="">
               <NavLink exact to="/login" activeClassName="navbar-active">
                 Login
               </NavLink>
@@ -42,7 +39,7 @@ function Navbar(props) {
 
 
             {context.loggedUser && (
-              <Col span={3} className="text-center p-3 p-md-5">
+              <Col span={3} className="">
             
                 <NavLink
                 exact to="/profile" activeClassName="navbar-active"
@@ -55,7 +52,7 @@ function Navbar(props) {
             )}
 
             {context.loggedUser && (            
-              <Col span={3} className="text-center p-3 p-md-5">
+              <Col span={3} className="">
               <NavLink
               exact to={`/addteam`}
               activeClassName="navbar-active"
@@ -66,7 +63,7 @@ function Navbar(props) {
               </Col>
           )}
 
-              <Col span={3} className="text-center p-3 p-md-5">
+              <Col span={3} className="">
                 <NavLink
                 exact to="/matchs" activeClassName="navbar-active"
                 >
@@ -75,7 +72,7 @@ function Navbar(props) {
 </Col>
 
 {context.loggedUser && (
-  <Col span={3} className="text-center p-3 p-md-5">
+  <Col span={3} className="">
             
               <NavLink
               exact to="/addmatchs" activeClassName="navbar-active"
@@ -87,7 +84,7 @@ function Navbar(props) {
           )}
 
           {context.loggedUser && (
-            <Col span={3} className="text-center p-3 p-md-5">
+            <Col span={3} className="">
               <button
                 onClick={() =>
                   context.handleLogout(() => {
