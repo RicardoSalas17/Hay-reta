@@ -20,6 +20,10 @@ function Home() {
             <br />
             <h3 >it’s whether you get up</h3>
             <p>Vince Lombardi</p>
+            <p>
+              Hay Reta is one of my early full stack projects. I keep it online as a snapshot of how I was learning
+              React, Express, MongoDB, Cloudinary and Mapbox by building something real.
+            </p>
           </div>
           <div >
             <img src="../images/home2.png" alt=""/>

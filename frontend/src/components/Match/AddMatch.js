@@ -6,8 +6,7 @@ import Swal from 'sweetalert2'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import mapboxgl from 'mapbox-gl' 
 
-mapboxgl.accessToken =
-'pk.eyJ1IjoiZGl1cml2aiIsImEiOiJjanAxdjA2cTQwMGp1M2tvYzZmZGp3bWc3In0.4cZEyLkU2ikqx_wb4A1z8A'
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || ''
 
 const { Option } = Select;
 
@@ -263,4 +262,3 @@ export default class AddMatch extends Component {
         )
         }
     }
-

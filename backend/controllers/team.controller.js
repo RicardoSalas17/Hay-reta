@@ -44,7 +44,7 @@ exports.createTeam = async (req, res) => {
   const {user} = req;
   let createTeam;
 
-  const plays = (players.split(','))
+  const plays = Array.isArray(players) ? players : String(players).split(',').filter(Boolean)
 
 
 
@@ -68,7 +68,7 @@ exports.createTeam = async (req, res) => {
   }
   const teamCreated = await Team.create(createTeam);
 
-  for (i = 0; i < plays.length; i++) {
+  for (let i = 0; i < plays.length; i++) {
     const userUpdated = await User.findByIdAndUpdate(
       plays[i], {
         $push: {
@@ -104,7 +104,7 @@ exports.updateTeam = async (req, res) => {
   const {
     id
   } = req.params
-  const plays = (players.split(','))
+  const plays = Array.isArray(players) ? players : String(players).split(',').filter(Boolean)
   let teamUpdate
 
   if (req.file) {
@@ -115,18 +115,15 @@ exports.updateTeam = async (req, res) => {
         image: req.file.secure_url
       }
 
-    })
+    }, { new: true })
   } else {
     teamUpdate = await Team.findByIdAndUpdate(id, {
       $set: {
         name,
         players: plays,
       }
-    })
+    }, { new: true })
   }
-
-
-  Team.findOneAndUpdate(id, teamUpdate)
 
   res.status(201).json(teamUpdate);
 };

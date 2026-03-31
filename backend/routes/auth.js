@@ -22,7 +22,7 @@ router.post('/signup',upload.single("image"),createUser
 // }
 );
 
-router.patch('/editprofile/:id',upload.single("image"),editUser);
+router.patch('/editprofile/:id', isAuth, upload.single("image"), editUser);
 
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
   const { user } = req;
@@ -35,11 +35,11 @@ router.get('/logout', (req, res, next) => {
 });
 
 
-router.get('/profile', getUser)
+router.get('/profile', isAuth, getUser)
 
 router.get("/profile/:id", getotherUser);
 
-router.delete("/profile/:id", deleteUser);
+router.delete("/profile/:id", isAuth, deleteUser);
 function isAuth(req, res, next) {
   req.isAuthenticated() ? next() : res.status(401).json({ msg: 'Log in first' });
 }

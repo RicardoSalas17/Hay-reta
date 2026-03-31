@@ -11,12 +11,15 @@ const {
 
 router.get("/teams", getTeams);
 router.get("/team/:id", getTeam);
-router.post("/teams",upload.single("image"), createTeam);
-router.patch('/editteam/:id',upload.single("image"),updateTeam);
-router.delete("/team/:id", deleteTeam);
+router.post("/teams", isAuth, upload.single("image"), createTeam);
+router.patch('/editteam/:id', isAuth, upload.single("image"), updateTeam);
+router.delete("/team/:id", isAuth, deleteTeam);
+
+function isAuth(req, res, next) {
+  req.isAuthenticated() ? next() : res.status(401).json({ msg: 'Log in first' });
+}
 
 
 module.exports = router;
-
 
 

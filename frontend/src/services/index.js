@@ -1,16 +1,6 @@
 import axios from 'axios';
-// let baseURL='https://eventer-r.herokuapp.com'
 
-// process.env.NODE_ENV === 'production'
-//   ? (baseURL = 'https://eventer-r.herokuapp.com')
-//   : 
-//   (baseURL = 'http://localhost:3000');
-
-// const service = axios.create({ withCredentials: true, baseURL });
-
-
-const baseURL = 'https://hay-reta.herokuapp.com/'
-// const baseURL = 'http://localhost:3000'
+const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3000/'
 
 const service = axios.create({
   baseURL,

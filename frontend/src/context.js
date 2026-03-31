@@ -26,36 +26,32 @@ class MyProvider extends Component {
       },
     user: {},
     file:{},
-    users:{}
+    users:[]
   }
 
   componentDidMount() {
-    if (!document.cookie) {
+    if (document.cookie) {
       MY_SERVICE.getUser()
         .then(({ data }) => {
           this.setState({ loggedUser: true, user: data.user })
           Swal.fire(`Welcome back ${data.user.name} `, '', 'success')
+          return MY_SERVICE.getUsers()
+        })
+        .then((response) => {
+          if (response) {
+            this.setState({ users: response.data.users })
+          }
         })
         .catch(err => console.log(err))
     }
-
-    if(this.state.loggedUser){
-      MY_SERVICE.getUsers()
-      .then(({ data }) => {
-        this.setState({users: data })
-      })
-      .catch(err => console.log(err))
-    }
   }
 
-  componentDidUpdate(){
-    if(this.state.loggedUser === true){
-    MY_SERVICE.getUser()
-    .then(({ data }) => {
-      this.setState({  user: data.user })
-    })
-    .catch(err => console.log(err))}
-}
+  componentDidUpdate(prevProps, prevState){
+    if (!prevState.loggedUser && this.state.loggedUser) {
+      this.handleUser()
+      this.handleUsers()
+    }
+  }
 
 handleUser =()=>{
   MY_SERVICE.getUser()
@@ -68,24 +64,29 @@ handleUser =()=>{
 handleUsers=()=>{
   MY_SERVICE.getUsers()
       .then(({ data }) => {
-        this.setState({users: data })
+        this.setState({users: data.users })
       })
       .catch(err => console.log(err))
 }
 
   handleInput = (e, obj) => {
-    const a = this.state[obj]
     const key = e.target.name
-    a[key] = e.target.value
-    this.setState({ obj: a })
+    this.setState({
+      [obj]: {
+        ...this.state[obj],
+        [key]: e.target.value
+      }
+    })
   }
 
 
 handleChange= (e,a, c) =>{
-  const s = this.state[a]
-  const key = c
-  s[key] = e
-  this.setState({ obj: {s}})
+  this.setState({
+    [a]: {
+      ...this.state[a],
+      [c]: e
+    }
+  })
 }
 
   handleFile = e => {
@@ -279,6 +280,4 @@ handleChange= (e,a, c) =>{
 
 
 export default MyProvider
-
-
 
