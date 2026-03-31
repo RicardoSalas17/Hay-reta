@@ -9,25 +9,24 @@ exports.getUsers= async(req,res) => {
  res.status(200).json({ users });
 }
 
-exports.createUser =  (req, res) => {
+exports.createUser = async (req, res) => {
   const { 
-    name,
+     name,
    email
       } = req.body
     let createUser
-    // const emailuser = req.body.email;
     const password = req.body.password;
 
     if (email === "" || password === "") {
       res.status(400).json({  message: "Indicate username and password"})
        return
-    }
+     }
 
-    User.findOne({ email }, "email", (err, user) => {
-      if (user !== null) {
-        res.status(401).json({ message: "The username already exists" });
-        return;
-      }})
+    const existingUser = await User.findOne({ email }, 'email')
+    if (existingUser) {
+      res.status(401).json({ message: "The username already exists" });
+      return;
+    }
 
     if (req.file) {
       createUser ={
@@ -61,19 +60,17 @@ exports.editUser = async (req, res) => {
      userUpdate = await User.findByIdAndUpdate(id,{
       $set:
     {  name,
-    image: req.file.secure_url}
+     image: req.file.secure_url}
       
-    })}
+    }, { new: true })}
   else {
      userUpdate = await User.findByIdAndUpdate(id,{
     $set:
    {
     name
     } 
-  })
+  }, { new: true })
 }
-
-User.findOneAndUpdate(id, userUpdate) 
 
   res.status(201).json(userUpdate);
 }
@@ -84,10 +81,9 @@ exports.login = (req, res, next) => {
 }
 
 exports.getUser = async (req, res, next) => {
-
-if(!req.user._id){
-  console.log("loading")
-}else {
+if (!req.user || !req.user._id) {
+  res.status(401).json({ msg: 'Log in first' })
+} else {
   const user = await User.findById(req.user._id).populate({
     path:"teams",
     populate:{ 
@@ -145,11 +141,9 @@ exports.getotherUser =async (req, res) => {
   exports.deleteUser =async (req, res) => {
     const { _id } = req.user;
     const  ids = req.user.teams
-    console.log(ids.length)
-    console.log(req.user.teams)
-    for(i=0; i<ids.length; i++){
-      const teams = await Team.findByIdAndDelete(ids[i])
-      }
+    for (let i = 0; i < ids.length; i++) {
+      await Team.findByIdAndDelete(ids[i])
+    }
     
     const user = await User.findByIdAndDelete(_id)
     res.status(200).json(user);

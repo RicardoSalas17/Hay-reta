@@ -10,6 +10,15 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('./config/passport');
 
+const allowedOrigins = (process.env.CORS_ORIGINS || [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'https://hay-reta-rs17-ironhackproject.netlify.app'
+].join(','))
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
 mongoose
   .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((x) => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
@@ -24,20 +33,29 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'https://epic-mcnulty-8b77ea.netlify.com'
-    ]
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error('Not allowed by CORS'));
+    }
   })
 )
+
+app.set('trust proxy', 1);
 
 app.use(
   session({
     resave: false,
     saveUninitialized: true,
     secret: process.env.SECRET,
-    cookie: { maxAge: 1000 * 60 * 60 }
+    cookie: {
+      maxAge: 1000 * 60 * 60,
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production'
+    }
   })
 );
 

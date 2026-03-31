@@ -5,7 +5,7 @@ const Team = require("../models/Team");
 exports.getMatchs = async (req, res) => {
   const match = await Match.find().populate("owner")
    .populate({
-    path:"Team"}).populate("players")
+    path:"teams"}).populate("players")
   res.status(200).json({ match });
 };
 
@@ -36,21 +36,10 @@ exports.createMatch = async (req, res) => {
           } = req.body
 
 
-let p
-if(players.includes(",")){
-  p=(players.split(','))
-  
-}else{
-  p=players
-}
+ const p = Array.isArray(players) ? players : String(players).split(',').filter(Boolean)
 
 
-let t
-if(teams.includes(",")){
-  t=(teams.split(','))
-}else{
-  t=teams
-}
+ const t = Array.isArray(teams) ? teams : String(teams).split(',').filter(Boolean)
 
 
   const { user } = req;
@@ -94,8 +83,8 @@ if(teams.includes(",")){
 
 
 
-if(players.includes(",")){
-  for(i=0; i<p.length; i++){
+if (Array.isArray(p) && p.length > 1) {
+  for (let i = 0; i < p.length; i++) {
     const userUpdated = await User.findByIdAndUpdate(
       p[i],
       { $push: { matchs:matchCreated._id } },
@@ -104,19 +93,19 @@ if(players.includes(",")){
     let actus = await User.findById(p[i]) 
     actus = userUpdated
   }
-} else{
+ } else {
   const userUpdated = await User.findByIdAndUpdate(
-    players,
+    p[0],
     { $push: { matchs:matchCreated._id } },
     { new: true }
   );
-  let actus = await User.findById(players) 
+  let actus = await User.findById(p[0]) 
   actus = userUpdated
 }
 
 
-if(teams.includes(",")){
-  for(i=0; i<t.length; i++){
+if (Array.isArray(t) && t.length > 1) {
+  for (let i = 0; i < t.length; i++) {
     const teamUpdated =await Team.findByIdAndUpdate(
       t[i],
       { $push: { matchs:matchCreated._id } },
@@ -125,13 +114,13 @@ if(teams.includes(",")){
     let acttea = await Team.findById(t[i]) 
     acttea = teamUpdated
   }
-} else{
+ } else {
   const teamUpdated =await Team.findByIdAndUpdate(
-    teams,
+    t[0],
     { $push: { matchs:matchCreated._id } },
     { new: true }
   );
-  let acttea = await Team.findById(Teams)
+  let acttea = await Team.findById(t[0])
   acttea = teamUpdated
 
 }
@@ -171,7 +160,7 @@ exports.updateMatch = async (req, res) => {
       matchType,
     image: req.file.secure_url}
       
-    })}
+    }, { new: true })}
   else {
      matchUpdate = await Match.findByIdAndUpdate(id,{
     $set:
@@ -188,10 +177,8 @@ exports.updateMatch = async (req, res) => {
     winner,
     looser
     } 
-  })
+  }, { new: true })
 }
-
-Match.findOneAndUpdate(id, matchUpdate) 
 
   res.status(201).json(matchUpdate);
 };

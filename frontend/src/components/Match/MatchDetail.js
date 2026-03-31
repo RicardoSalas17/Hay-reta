@@ -7,8 +7,7 @@ import Swal from 'sweetalert2'
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
 import mapboxgl from 'mapbox-gl'
 
-mapboxgl.accessToken =
-'pk.eyJ1IjoiZGl1cml2aiIsImEiOiJjanAxdjA2cTQwMGp1M2tvYzZmZGp3bWc3In0.4cZEyLkU2ikqx_wb4A1z8A'
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || ''
 
 class MatchDetail extends Component {
     state = {
@@ -20,21 +19,27 @@ class MatchDetail extends Component {
         lat: 34,
         zoom: 15
     }
+
+    loadMatch = async () => {
+      const { id } = this.props.match.params
+      const { data } = await MY_SERVICE.getMatch(`/matchs/${id}`)
+      this.setState({ match: { ...data } })
+      return data
+    }
+
     async componentDidMount() {
-        const { id } = this.props.match.params
-        const { data } = await MY_SERVICE.getMatch(`/matchs/${id}`)
-        this.setState({ match: { ...data } })
+        const data = await this.loadMatch()
         const {  zoom } = this.state
         const geocoder = new MapboxGeocoder({
           accessToken: mapboxgl.accessToken
         })
-        const map = new mapboxgl.Map({
+        this.map = new mapboxgl.Map({
           container: this.mapContainer,
           style: 'mapbox://styles/mapbox/streets-v9',
           center: [data.lng, data.lat],
           zoom
         })
-        map.addControl(geocoder)
+        this.map.addControl(geocoder)
         geocoder.on('result', (e) => {
           this.setState({
             formMatch:{
@@ -45,16 +50,18 @@ class MatchDetail extends Component {
           })
         })
       }
-      async componentDidUpdate(){
-        const { id } = this.props.match.params
-        const { data } = await MY_SERVICE.getMatch(`/matchs/${id}`)
-        this.setState({ match: { ...data } })
+
+      componentWillUnmount() {
+        if (this.map) {
+          this.map.remove()
+        }
       }
+
       inputChange = ({ target: {value, name} }) =>{
         this.setState({
           ...this.state,
           formComment:{
-            ...this.state.formMatch,
+            ...this.state.formComment,
             [name]:value
           }
         });
@@ -71,6 +78,7 @@ class MatchDetail extends Component {
             image:'',
             }
         })
+        await this.loadMatch()
       };
   render(props) {
     const { match } = this.state
@@ -233,4 +241,3 @@ class MatchDetail extends Component {
 
 
 export default MatchDetail
-

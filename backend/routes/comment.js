@@ -10,12 +10,15 @@ const {
 
 
 router.get("/comment/:id", getComment);
-router.post("/comments/:id", createComment);
-router.patch("/comments/:id", updateComment);
-router.delete("/comments/:id", deleteComment);
+router.post("/comments/:id", isAuth, createComment);
+router.patch("/comments/:id", isAuth, updateComment);
+router.delete("/comments/:id", isAuth, deleteComment);
+
+function isAuth(req, res, next) {
+  req.isAuthenticated() ? next() : res.status(401).json({ msg: 'Log in first' });
+}
 
 
 module.exports = router;
-
 
 
