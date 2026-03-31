@@ -28,13 +28,15 @@ Create `backend/.env` with:
 
 ```bash
 PORT=3000
-DB=mongodb+srv://...
+DB=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/hay-reta?retryWrites=true&w=majority
 SECRET=replace-me
 CORS_ORIGINS=http://localhost:3000,http://localhost:3001,https://your-netlify-site.netlify.app
 CLOUDINARY_NAME=...
 CLOUDINARY_KEY=...
 CLOUDINARY_SECRET=...
 ```
+
+The MongoDB connection string must include the database name, for example `/hay-reta` before the query string.
 
 ## Commands
 

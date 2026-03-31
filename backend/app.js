@@ -10,6 +10,25 @@ const cors = require('cors');
 const session = require('express-session');
 const passport = require('./config/passport');
 
+function validateMongoUri(uri) {
+  if (!uri) {
+    throw new Error('Missing DB environment variable');
+  }
+
+  const matchesSrv = uri.startsWith('mongodb+srv://');
+  const matchesStandard = uri.startsWith('mongodb://');
+
+  if (!matchesSrv && !matchesStandard) {
+    throw new Error('DB must be a valid MongoDB connection string');
+  }
+
+  const dbName = uri.split('?')[0].split('/').pop();
+
+  if (!dbName) {
+    throw new Error('DB connection string must include a database name, for example /hay-reta before the query string');
+  }
+}
+
 const allowedOrigins = (process.env.CORS_ORIGINS || [
   'http://localhost:3000',
   'http://localhost:3001',
@@ -19,11 +38,22 @@ const allowedOrigins = (process.env.CORS_ORIGINS || [
   .map((origin) => origin.trim())
   .filter(Boolean);
 
-mongoose
-  .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then((x) => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
-  .catch((err) => console.error('Error connecting to mongo', err));
-  mongoose.set('useFindAndModify', false);
+try {
+  validateMongoUri(process.env.DB);
+
+  mongoose
+    .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((x) => console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`))
+    .catch((err) => {
+      console.error('Error connecting to mongo', err);
+      process.exit(1);
+    });
+} catch (error) {
+  console.error(`Invalid Mongo configuration: ${error.message}`);
+  process.exit(1);
+}
+
+mongoose.set('useFindAndModify', false);
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
