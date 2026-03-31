@@ -1,6 +1,15 @@
 import axios from 'axios';
 
-const baseURL = process.env.REACT_APP_API_URL || 'http://localhost:3000/'
+const envBaseURL = process.env.REACT_APP_API_URL
+const baseURL = envBaseURL
+  ? envBaseURL.replace(/\/+$/, '')
+  : process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3000'
+    : ''
+
+if (!baseURL && process.env.NODE_ENV !== 'development') {
+  console.warn('Missing REACT_APP_API_URL. Frontend requests will use the current origin.');
+}
 
 const service = axios.create({
   baseURL,
