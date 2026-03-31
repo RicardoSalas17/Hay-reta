@@ -79,7 +79,7 @@ app.set('trust proxy', 1);
 app.use(
   session({
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     secret: process.env.SECRET,
     cookie: {
       maxAge: 1000 * 60 * 60,
