@@ -22,7 +22,7 @@ function Home() {
             <p>Vince Lombardi</p>
             <p>
               Hay Reta is one of my early full stack projects. I keep it online as a snapshot of how I was learning
-              React, Express, MongoDB, Cloudinary and Mapbox by building something real.
+              React, Express, MongoDB, Cloudinary, Leaflet and location search by building something real.
             </p>
           </div>
           <div >

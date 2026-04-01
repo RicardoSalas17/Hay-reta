@@ -17,13 +17,13 @@ Live frontend: `https://hay-reta-rs17-ironhackproject.netlify.app/`
 - Create matches
 - Comment on matches
 - Upload images with Cloudinary
-- Show locations with Mapbox
+- Show locations with Leaflet and Geoapify
 
 ## Tech Stack
 
 - Frontend: React 16, React Router, Ant Design, Axios
 - Backend: Express, Mongoose, Passport, Express Session
-- Services: MongoDB Atlas, Cloudinary, Mapbox, Netlify
+- Services: MongoDB Atlas, Cloudinary, Geoapify, Netlify
 
 ## What Was Improved In This Pass
 
@@ -68,7 +68,7 @@ Create `frontend/.env` from `frontend/.env.example`.
 
 ```bash
 REACT_APP_API_URL=http://localhost:3000/
-REACT_APP_MAPBOX_TOKEN=replace-me
+REACT_APP_GEOAPIFY_KEY=replace-me
 ```
 
 ### Backend
