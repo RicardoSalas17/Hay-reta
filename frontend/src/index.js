@@ -5,6 +5,7 @@ import Router from "./Router";
 import * as serviceWorker from "./serviceWorker";
 import MyProvider from "./context";
 import "antd/dist/antd.css";
+import "leaflet/dist/leaflet.css";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles/App.css";
 

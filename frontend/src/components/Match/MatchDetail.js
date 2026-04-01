@@ -4,10 +4,7 @@ import { MyContext } from "../../context";
 import { Form, Input, Button, Skeleton, Col, Row } from 'antd'
 import { Link} from 'react-router-dom'
 import Swal from 'sweetalert2'
-import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder'
-import mapboxgl from 'mapbox-gl'
-
-mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN || ''
+import L from 'leaflet'
 
 class MatchDetail extends Component {
     state = {
@@ -30,25 +27,16 @@ class MatchDetail extends Component {
     async componentDidMount() {
         const data = await this.loadMatch()
         const {  zoom } = this.state
-        const geocoder = new MapboxGeocoder({
-          accessToken: mapboxgl.accessToken
-        })
-        this.map = new mapboxgl.Map({
-          container: this.mapContainer,
-          style: 'mapbox://styles/mapbox/streets-v9',
-          center: [data.lng, data.lat],
-          zoom
-        })
-        this.map.addControl(geocoder)
-        geocoder.on('result', (e) => {
-          this.setState({
-            formMatch:{
-            lng: e.result.geometry.coordinates[0],
-            lat: e.result.geometry.coordinates[1],
-            direction:`${e.result.place_name}`
-            }
-          })
-        })
+        this.map = L.map(this.mapContainer).setView([data.lat, data.lng], zoom)
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(this.map)
+
+        L.circleMarker([data.lat, data.lng], {
+          radius: 8,
+          color: '#f5222d'
+        }).addTo(this.map)
       }
 
       componentWillUnmount() {
